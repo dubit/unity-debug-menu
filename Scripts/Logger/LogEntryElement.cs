@@ -6,6 +6,7 @@ namespace DUCK.DebugMenu.Logger
 	public class LogEntryElement : MonoBehaviour
 	{
 		public Image Background { get { return background; } }
+		public Button ButtonComponent { get { return button; } }
 		public Text TextComponent { get { return text; } }
 		public Image IconComponent { get { return icon; } }
 
@@ -15,5 +16,7 @@ namespace DUCK.DebugMenu.Logger
 		private Text text;
 		[SerializeField]
 		private Image background;
+		[SerializeField]
+		private Button button;
 	}
 }

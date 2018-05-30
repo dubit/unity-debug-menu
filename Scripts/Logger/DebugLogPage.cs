@@ -48,6 +48,15 @@ namespace DUCK.DebugMenu.Logger
 		private Button toggleWarningsButton;
 		[SerializeField]
 		private Button toggleErrorButton;
+		[Header("StackTrace")]
+		[SerializeField]
+		private GameObject stackTraceContainer;
+		[SerializeField]
+		private Button stackTraceBackButton;
+		[SerializeField]
+		private Text stackTraceText;
+		[SerializeField]
+		private Text stackTraceLogText;
 
 		private readonly Queue<PendingLog> pendingLogs = new Queue<PendingLog>();
 		private readonly Color oddBackgroundColor = new Color(0.95f, 0.95f, 0.95f);
@@ -58,6 +67,7 @@ namespace DUCK.DebugMenu.Logger
 		{
 			entryPrefab.gameObject.SetActive(false);
 			container.gameObject.SetActive(false);
+			stackTraceContainer.gameObject.SetActive(false);
 			clearButton.interactable = false;
 			clearButton.onClick.AddListener(Clear);
 
@@ -74,6 +84,12 @@ namespace DUCK.DebugMenu.Logger
 			toggleInfoButton.onClick.AddListener(UpdateLogEntryBackgrounds);
 			toggleWarningsButton.onClick.AddListener(UpdateLogEntryBackgrounds);
 			toggleErrorButton.onClick.AddListener(UpdateLogEntryBackgrounds);
+
+			stackTraceBackButton.onClick.AddListener(() =>
+			{
+				container.gameObject.SetActive(true);
+				stackTraceContainer.gameObject.SetActive(false);
+			});
 
 			Application.logMessageReceived += HandleLog;
 		}
@@ -96,6 +112,8 @@ namespace DUCK.DebugMenu.Logger
 			}
 
 			container.gameObject.SetActive(activeLogs.Length > 0);
+
+			StartCoroutine(ScrollToBottom());
 		}
 
 		private void OnEnable()
@@ -116,7 +134,7 @@ namespace DUCK.DebugMenu.Logger
 			container.gameObject.SetActive(false);
 		}
 
-		private void AddLogEntry(string text, LogType logType)
+		private void AddLogEntry(string text, string stackTrace, LogType logType)
 		{
 			if (!container.gameObject.activeSelf)
 			{
@@ -128,6 +146,7 @@ namespace DUCK.DebugMenu.Logger
 			var logTypeData = logTypeDatas[logType];
 			var newLogEntry = Instantiate(entryPrefab, container, false);
 			newLogEntry.transform.SetAsLastSibling();
+			newLogEntry.ButtonComponent.onClick.AddListener(() => HandleStackTrace(text, stackTrace));
 			newLogEntry.TextComponent.text = text;
 			newLogEntry.IconComponent.sprite = logTypeDatas[logType].Icon;
 			newLogEntry.gameObject.SetActive(logTypeData.isVisible);
@@ -135,6 +154,14 @@ namespace DUCK.DebugMenu.Logger
 			allLogs.Add(newLogEntry);
 
 			UpdateLogEntryBackgrounds();
+		}
+
+		private void HandleStackTrace(string log, string stackTrace)
+		{
+			container.gameObject.SetActive(false);
+			stackTraceContainer.gameObject.SetActive(true);
+			stackTraceLogText.text = log;
+			stackTraceText.text = stackTrace;
 		}
 
 		private IEnumerator ScrollToBottom()
@@ -150,7 +177,7 @@ namespace DUCK.DebugMenu.Logger
 			while (pendingLogs.Count > 0)
 			{
 				var pendingLog = pendingLogs.Dequeue();
-				AddLogEntry(pendingLog.LogMessage, pendingLog.LogType);
+				AddLogEntry(pendingLog.LogMessage, pendingLog.StackTrace, pendingLog.LogType);
 			}
 
 			StartCoroutine(ScrollToBottom());
