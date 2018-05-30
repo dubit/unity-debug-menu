@@ -8,10 +8,9 @@ namespace DUCK.DebugMenu.Logger
 	public class LogTypeData
 	{
 		public Sprite Icon { get; private set; }
-		private bool isVisible;
+		public bool isVisible { get; private set; }
 		private readonly List<LogEntryElement> logs;
 		private readonly CanvasGroup toggleFilterCanvasGroup;
-		private readonly Color oddBackgroundColor;
 
 		public LogTypeData(Button toggleFilterButton, Sprite icon)
 		{
@@ -20,7 +19,6 @@ namespace DUCK.DebugMenu.Logger
 			toggleFilterCanvasGroup = toggleFilterButton.GetComponent<CanvasGroup>();
 			isVisible = true;
 			logs = new List<LogEntryElement>();
-			oddBackgroundColor = new Color(0.8f, 0.8f, 0.8f);
 		}
 
 		public void AddLog(LogEntryElement logEntryElement)
@@ -46,16 +44,6 @@ namespace DUCK.DebugMenu.Logger
 			}
 
 			logs.Clear();
-		}
-
-		public void UpdateBackground(ref int count)
-		{
-			if (!isVisible) return;
-
-			foreach (var logEntryElement in logs)
-			{
-				logEntryElement.Background.color = count++ % 2 != 0 ? oddBackgroundColor : Color.white;
-			}
 		}
 	}
 }

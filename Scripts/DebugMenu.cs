@@ -78,21 +78,6 @@ namespace DUCK.DebugMenu
 			}
 		}
 
-		public void Log(string text)
-		{
-			logPage.Log(text, DebugLogPage.LogType.Default);
-		}
-
-		public void LogWarning(string text)
-		{
-			logPage.Log(text, DebugLogPage.LogType.Warning);
-		}
-
-		public void LogError(string text)
-		{
-			logPage.Log(text, DebugLogPage.LogType.Error);
-		}
-
 		/// <summary>
 		/// Shows the debug menu
 		/// </summary>

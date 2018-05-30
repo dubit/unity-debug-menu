@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,22 +11,17 @@ namespace DUCK.DebugMenu.Logger
 	/// </summary>
 	public class DebugLogPage : MonoBehaviour
 	{
-		public enum LogType
-		{
-			Default = 12171705,
-			Warning = 16753920,
-			Error = 16711680
-		}
-
 		private struct PendingLog
 		{
 			public readonly string LogMessage;
+			public readonly string StackTrace;
 			public readonly LogType LogType;
 
-			public PendingLog(string logMessage, LogType logType)
+			public PendingLog(string logMessage, string stackTrace, LogType logType)
 			{
 				LogMessage = logMessage;
 				LogType = logType;
+				StackTrace = stackTrace;
 			}
 		}
 
@@ -54,32 +50,52 @@ namespace DUCK.DebugMenu.Logger
 		private Button toggleErrorButton;
 
 		private readonly Queue<PendingLog> pendingLogs = new Queue<PendingLog>();
+		private readonly Color oddBackgroundColor = new Color(0.95f, 0.95f, 0.95f);
+		private readonly List<LogEntryElement> allLogs = new List<LogEntryElement>();
 		private Dictionary<LogType, LogTypeData> logTypeDatas;
 
 		private void Awake()
 		{
 			entryPrefab.gameObject.SetActive(false);
+			container.gameObject.SetActive(false);
 			clearButton.interactable = false;
+			clearButton.onClick.AddListener(Clear);
 
+			var errorLogData = new LogTypeData(toggleErrorButton, errorIcon);
 			logTypeDatas = new Dictionary<LogType, LogTypeData>
 			{
-				{LogType.Default, new LogTypeData(toggleInfoButton, infoIcon)},
+				{LogType.Log, new LogTypeData(toggleInfoButton, infoIcon)},
 				{LogType.Warning, new LogTypeData(toggleWarningsButton, warningIcon)},
-				{LogType.Error, new LogTypeData(toggleErrorButton, errorIcon)},
+				{LogType.Error, errorLogData},
+				{LogType.Assert, errorLogData},
+				{LogType.Exception, errorLogData}
 			};
 
 			toggleInfoButton.onClick.AddListener(UpdateLogEntryBackgrounds);
 			toggleWarningsButton.onClick.AddListener(UpdateLogEntryBackgrounds);
 			toggleErrorButton.onClick.AddListener(UpdateLogEntryBackgrounds);
+
+			Application.logMessageReceived += HandleLog;
+		}
+
+		private void HandleLog(string logString, string stackTrace, LogType type)
+		{
+			pendingLogs.Enqueue(new PendingLog(logString, stackTrace, type));
 		}
 
 		private void UpdateLogEntryBackgrounds()
 		{
-			var count = 0;
-			foreach (var logTypeData in logTypeDatas)
+			var activeLogs = allLogs
+				.Where(l => l.gameObject.activeSelf)
+				.OrderBy(l => l.transform.GetSiblingIndex())
+				.ToArray();
+
+			for (var i = 0; i < activeLogs.Length; i++)
 			{
-				logTypeData.Value.UpdateBackground(ref count);
+				activeLogs[i].Background.color = i % 2 != 0 ? oddBackgroundColor : Color.white;
 			}
+
+			container.gameObject.SetActive(activeLogs.Length > 0);
 		}
 
 		private void OnEnable()
@@ -87,38 +103,36 @@ namespace DUCK.DebugMenu.Logger
 			StartCoroutine(ScrollToBottom());
 		}
 
-		/// <summary>
-		/// The logs are passed back to the main thread through a queue as instantiating the new log
-		/// must be done on the main thread, however the queue itself is not properly concurrent.
-		/// </summary>
-		public void Log(string text, LogType logType)
-		{
-			pendingLogs.Enqueue(new PendingLog(text, logType));
-		}
-
-		/// <summary>
-		/// Called from a Clear button OnClick in the prefab
-		/// </summary>
-		public void Clear()
+		private void Clear()
 		{
 			foreach (var logTypeData in logTypeDatas)
 			{
 				logTypeData.Value.Clear();
 			}
 
+			allLogs.Clear();
+
 			clearButton.interactable = false;
+			container.gameObject.SetActive(false);
 		}
 
 		private void AddLogEntry(string text, LogType logType)
 		{
+			if (!container.gameObject.activeSelf)
+			{
+				container.gameObject.SetActive(true);
+			}
+
 			clearButton.interactable = true;
 
+			var logTypeData = logTypeDatas[logType];
 			var newLogEntry = Instantiate(entryPrefab, container, false);
 			newLogEntry.transform.SetAsLastSibling();
 			newLogEntry.TextComponent.text = text;
 			newLogEntry.IconComponent.sprite = logTypeDatas[logType].Icon;
-			newLogEntry.gameObject.SetActive(true);
-			logTypeDatas[logType].AddLog(newLogEntry);
+			newLogEntry.gameObject.SetActive(logTypeData.isVisible);
+			logTypeData.AddLog(newLogEntry);
+			allLogs.Add(newLogEntry);
 
 			UpdateLogEntryBackgrounds();
 		}
@@ -140,6 +154,11 @@ namespace DUCK.DebugMenu.Logger
 			}
 
 			StartCoroutine(ScrollToBottom());
+		}
+
+		private void OnDestroy()
+		{
+			Application.logMessageReceived -= HandleLog;
 		}
 	}
 }
