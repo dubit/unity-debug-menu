@@ -36,7 +36,7 @@ namespace DUCK.DebugMenu
 
 		[SerializeField]
 		private GameObject rootObject;
-		
+
 		[SerializeField]
 		private Button actionButtonTemplate;
 
@@ -60,8 +60,6 @@ namespace DUCK.DebugMenu
 
 			rootObject.gameObject.SetActive(false);
 
-			logPage.Initialise();
-
 			// When running tests you cannot use DontDestroyOnLoad in editor mode
 			if (Application.isPlaying)
 			{
@@ -74,10 +72,25 @@ namespace DUCK.DebugMenu
 			// Find any summoners added to the same object
 			var summoners = GetComponents<IDebugMenuSummoner>();
 
-			foreach(var summoner in summoners)
+			foreach (var summoner in summoners)
 			{
 				AddSummoner(summoner);
 			}
+		}
+
+		public void Log(string text)
+		{
+			logPage.Log(text, DebugLogPage.LogType.Default);
+		}
+
+		public void LogWarning(string text)
+		{
+			logPage.Log(text, DebugLogPage.LogType.Warning);
+		}
+
+		public void LogError(string text)
+		{
+			logPage.Log(text, DebugLogPage.LogType.Error);
 		}
 
 		/// <summary>

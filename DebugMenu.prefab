@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 222404070950221454}
   - component: {fileID: 114906717822598226}
   - component: {fileID: 114386622747533172}
+  - component: {fileID: 225933023419678178}
   m_Layer: 5
   m_Name: FilterWarnings
   m_TagString: Untagged
@@ -754,6 +755,7 @@ GameObject:
   - component: {fileID: 222050042428676618}
   - component: {fileID: 114934693727958990}
   - component: {fileID: 114288165131515064}
+  - component: {fileID: 114617032129425444}
   m_Layer: 5
   m_Name: LogEntry
   m_TagString: Untagged
@@ -894,6 +896,7 @@ GameObject:
   - component: {fileID: 222120745473371704}
   - component: {fileID: 114035867285732790}
   - component: {fileID: 114078993922106736}
+  - component: {fileID: 225051623961349382}
   m_Layer: 5
   m_Name: FilterErrors
   m_TagString: Untagged
@@ -1111,6 +1114,7 @@ GameObject:
   - component: {fileID: 222962608571296766}
   - component: {fileID: 114236249757544036}
   - component: {fileID: 114012651523041904}
+  - component: {fileID: 225881003644383370}
   m_Layer: 5
   m_Name: FilterInfo
   m_TagString: Untagged
@@ -2392,8 +2396,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 16
     m_Right: 16
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 25
+    m_Bottom: 25
   m_ChildAlignment: 0
   m_Spacing: 16
   m_ChildForceExpandWidth: 0
@@ -3128,6 +3132,33 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114617032129425444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551095865189504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114629123274403944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3258,6 +3289,9 @@ MonoBehaviour:
   container: {fileID: 224133440273596208}
   entryPrefab: {fileID: 114934693727958990}
   clearButton: {fileID: 114423805724162580}
+  toggleInfoButton: {fileID: 114012651523041904}
+  toggleWarningsButton: {fileID: 114386622747533172}
+  toggleErrorButton: {fileID: 114078993922106736}
 --- !u!114 &114675850846636906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3900,6 +3934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 114429285055171250}
   text: {fileID: 114095191513943368}
+  background: {fileID: 114617032129425444}
 --- !u!114 &114938960872286380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6297,12 +6332,45 @@ RectTransform:
   m_AnchoredPosition: {x: 32, y: 0}
   m_SizeDelta: {x: -32, y: 100}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!225 &225051623961349382
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660678690832060}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!225 &225178801765924544
 CanvasGroup:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1404480785102004}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!225 &225881003644383370
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776948632473760}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!225 &225933023419678178
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1287229042960428}
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
