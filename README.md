@@ -19,7 +19,7 @@ Register a custom button with the DebugMenu by using the `AddButton` method. Thi
 `DebugMenu.Instance.AddButton("Button", () => { Debug.Log("My custom button was clicked."); });`
 
 ### Summoners
-The ready-made prefab that ships with DUCK, has a DefaultDebugMenuSummoner. Use `F7` on PC or `7 touches` on mobile to open the DebugMenu.
+The ready-made prefab that ships with DUCK, has a DefaultDebugMenuSummoner. Use `F7` on PC or `6 touches` on mobile to open the DebugMenu.
 
 If you want to use your own logic to summon the debug menu then implement your own `IDebugMenuSummoner` and register it.
 
