@@ -57,6 +57,8 @@ namespace DUCK.DebugMenu.Logger
 		private Text stackTraceText;
 		[SerializeField]
 		private Text stackTraceLogText;
+		[SerializeField]
+		private Button emailStackTraceButton;
 
 		private readonly Queue<PendingLog> pendingLogs = new Queue<PendingLog>();
 		private readonly Color oddBackgroundColor = new Color(0.95f, 0.95f, 0.95f);
@@ -66,7 +68,7 @@ namespace DUCK.DebugMenu.Logger
 		private void Awake()
 		{
 			entryPrefab.gameObject.SetActive(false);
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(false);
 			clearButton.interactable = false;
 			clearButton.onClick.AddListener(Clear);
@@ -87,8 +89,13 @@ namespace DUCK.DebugMenu.Logger
 
 			stackTraceBackButton.onClick.AddListener(() =>
 			{
-				container.gameObject.SetActive(true);
+				scrollRect.gameObject.SetActive(true);
 				stackTraceContainer.gameObject.SetActive(false);
+			});
+			emailStackTraceButton.onClick.AddListener(() =>
+			{
+				gameObject.SetActive(false);
+				DebugMenu.Instance.EmailPage.Show(stackTraceLogText.text, stackTraceText.text, () => gameObject.SetActive(true));
 			});
 
 			Application.logMessageReceived += HandleLog;
@@ -111,7 +118,7 @@ namespace DUCK.DebugMenu.Logger
 				activeLogs[i].Background.color = i % 2 != 0 ? oddBackgroundColor : Color.white;
 			}
 
-			container.gameObject.SetActive(activeLogs.Length > 0);
+			scrollRect.gameObject.SetActive(activeLogs.Length > 0);
 
 			StartCoroutine(ScrollToBottom());
 		}
@@ -131,14 +138,14 @@ namespace DUCK.DebugMenu.Logger
 			allLogs.Clear();
 
 			clearButton.interactable = false;
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 		}
 
 		private void AddLogEntry(string text, string stackTrace, LogType logType)
 		{
-			if (!container.gameObject.activeSelf)
+			if (!scrollRect.gameObject.activeSelf)
 			{
-				container.gameObject.SetActive(true);
+				scrollRect.gameObject.SetActive(true);
 			}
 
 			clearButton.interactable = true;
@@ -158,7 +165,7 @@ namespace DUCK.DebugMenu.Logger
 
 		private void HandleStackTrace(string log, string stackTrace)
 		{
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(true);
 			stackTraceLogText.text = log;
 			stackTraceText.text = stackTrace;
