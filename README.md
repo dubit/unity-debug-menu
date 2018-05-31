@@ -15,7 +15,7 @@ Built-in Features:
 Have the DebugMenu prefab active in the scene.
 
 ### Buttons
-Register a custom button with the DebugMenu by using the `AddButton` method. This method requires a unique identifier for the button (which it will also display as the the label for the button) and an Action to invoke when the button is clicked. The method also inclused an optional parameter (`hideDebugMenuOnClick`) for closing the DebugMenu when this custom button is clicked.
+Register a custom button with the DebugMenu by using the `AddButton` method. This method requires a unique identifier for the button (which it will also display as the the label for the button) and an Action to invoke when the button is clicked. The method also inclused an optional parameter (`hideDebugMenuOnClick`) for closing the DebugMenu when this custom button is clicked.  
 `DebugMenu.Instance.AddButton("Button", () => { Debug.Log("My custom button was clicked."); });`
 
 ### Summoners
