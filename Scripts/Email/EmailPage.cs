@@ -34,7 +34,7 @@ namespace DUCK.DebugMenu.Email
 		private void Awake()
 		{
 			var emailAddressesModel = JsonUtility.FromJson<EmailAddressesModel>(emailAddressesJson.text);
-			var emailAddresses = emailAddressesModel.emails;
+			var emailAddresses = emailAddressesModel.Emails;
 
 			emailDropdown.AddOptions(emailAddresses.ToList());
 

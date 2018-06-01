@@ -1,7 +1,12 @@
-﻿namespace DUCK.DebugMenu.Email
+﻿using UnityEngine;
+
+namespace DUCK.DebugMenu.Email
 {
 	public class EmailAddressesModel
 	{
-		public string[] emails;
+		public string[] Emails { get { return emails; } }
+
+		[SerializeField]
+		private string[] emails;
 	}
 }
