@@ -23,8 +23,6 @@ namespace DUCK.DebugMenu.Email
 		private InputField subjectText;
 		[SerializeField]
 		private Text bodyText;
-		[SerializeField]
-		private Image bodyImage;
 
 		private Action onBack;
 
@@ -52,10 +50,6 @@ namespace DUCK.DebugMenu.Email
 			gameObject.SetActive(true);
 			subjectText.text = subject;
 			bodyText.text = GenerateBody(body);
-		}
-
-		public void Show(string subject, Texture body)
-		{
 		}
 
 		private void SendEmail()
