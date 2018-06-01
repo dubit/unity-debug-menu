@@ -5,6 +5,8 @@ namespace DUCK.DebugMenu.CloudBuild
 {
 	public class CloudBuildPage : MonoBehaviour
 	{
+		public CloudBuildManifest BuildManifest { get; private set; }
+
 		[Header("Cloud Build Manifest Info Text")]
 		[SerializeField]
 		private Text scmCommitId;
@@ -30,18 +32,18 @@ namespace DUCK.DebugMenu.CloudBuild
 			var buildManifestJson = Resources.Load<TextAsset>("UnityCloudBuildManifest.json");
 			if (!buildManifestJson) return;
 
-			var buildManifest = JsonUtility.FromJson<CloudBuildManifest>(buildManifestJson.text);
-			if (buildManifest != null)
+			BuildManifest = JsonUtility.FromJson<CloudBuildManifest>(buildManifestJson.text);
+			if (BuildManifest != null)
 			{
-				scmCommitId.text = buildManifest.ScmCommitId;
-				scmBranch.text = buildManifest.ScmBranch;
-				buildNumber.text = buildManifest.BuildNumber;
-				buildStartTime.text = buildManifest.BuildStartTime;
-				projectId.text = buildManifest.ProjectId;
-				bundleId.text = buildManifest.BundleId;
-				unityVersion.text = buildManifest.UnityVersion;
-				xcodeVersion.text = buildManifest.XcodeVersion;
-				cloudBuildTargetName.text = buildManifest.CloudBuildTargetName;
+				scmCommitId.text = BuildManifest.ScmCommitId;
+				scmBranch.text = BuildManifest.ScmBranch;
+				buildNumber.text = BuildManifest.BuildNumber;
+				buildStartTime.text = BuildManifest.BuildStartTime;
+				projectId.text = BuildManifest.ProjectId;
+				bundleId.text = BuildManifest.BundleId;
+				unityVersion.text = BuildManifest.UnityVersion;
+				xcodeVersion.text = BuildManifest.XcodeVersion;
+				cloudBuildTargetName.text = BuildManifest.CloudBuildTargetName;
 #if !UNITY_IPHONE
 				xcodeVersion.gameObject.SetActive(false);
 #endif

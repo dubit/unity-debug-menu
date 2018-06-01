@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -95,9 +96,14 @@ namespace DUCK.DebugMenu.Logger
 			emailStackTraceButton.onClick.AddListener(() =>
 			{
 				gameObject.SetActive(false);
-				DebugMenu.Instance.EmailPage.Show(stackTraceLogText.text, stackTraceText.text, () => gameObject.SetActive(true));
+				const string emailSubject = "Unity DebugMenu has reported a log.";
+				var emailBody = GenerateEmailBody(stackTraceLogText.text, stackTraceText.text);
+				DebugMenu.Instance.EmailPage.Show(emailSubject, emailBody, () => gameObject.SetActive(true));
 			});
+		}
 
+		public void Initialize()
+		{
 			Application.logMessageReceived += HandleLog;
 		}
 
@@ -188,6 +194,17 @@ namespace DUCK.DebugMenu.Logger
 			}
 
 			StartCoroutine(ScrollToBottom());
+		}
+
+		private static string GenerateEmailBody(string log, string stackTrace)
+		{
+			var body = new StringBuilder("----------------------------------\n");
+			body.AppendLine(log);
+			body.Append("\n----------------------------------\n");
+			body.Append(stackTrace);
+			body.Append("\n");
+
+			return body.ToString();
 		}
 
 		private void OnDestroy()

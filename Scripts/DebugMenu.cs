@@ -79,6 +79,8 @@ namespace DUCK.DebugMenu
 			{
 				AddSummoner(summoner);
 			}
+
+			logPage.Initialize();
 		}
 
 		/// <summary>
