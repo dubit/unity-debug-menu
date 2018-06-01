@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DUCK.DebugMenu.Email;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -198,9 +199,12 @@ namespace DUCK.DebugMenu.Logger
 
 		private static string GenerateEmailBody(string log, string stackTrace)
 		{
-			var body = new StringBuilder("----------------------------------\n");
-			body.AppendLine(log);
-			body.Append("\n----------------------------------\n");
+			var body = new StringBuilder(EmailPage.SEPERATOR);
+			body.Append("\n");
+			body.Append(log);
+			body.Append("\n");
+			body.Append(EmailPage.SEPERATOR);
+			body.Append("\n");
 			body.Append(stackTrace);
 			body.Append("\n");
 
