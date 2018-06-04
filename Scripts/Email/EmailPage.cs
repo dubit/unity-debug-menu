@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using DUCK.DebugMenu.CloudBuild;
 using DUCK.DebugMenu.Email.Body;
+using DUCK.DebugMenu.InfoPage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +17,9 @@ namespace DUCK.DebugMenu.Email
 		private TextAsset emailAddressesJson;
 		[Header("Components")]
 		[SerializeField]
-		private CloudBuildPage cloudBuildPage;
+		private CloudBuildInfoPage cloudBuildInfoPage;
+		[SerializeField]
+		private DeviceInfoPage deviceInfoPage;
 		[SerializeField]
 		private Button backButton;
 		[SerializeField]
@@ -58,9 +60,9 @@ namespace DUCK.DebugMenu.Email
 		private string GenerateBody(string submittedBody)
 		{
 			var body = new StringBuilder();
-			body.Append(CloudBuildInfo.Generate(cloudBuildPage.BuildManifest));
+			body.Append(CloudBuildInfo.Generate(cloudBuildInfoPage.BuildManifest));
 			body.Append(submittedBody);
-			body.Append(DeviceInfo.Generate());
+			body.Append(DeviceInfo.Generate(deviceInfoPage.DeviceInfoManifest));
 			return body.ToString();
 		}
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DUCK.DebugMenu.CloudBuild
+namespace DUCK.DebugMenu.InfoPage
 {
 	public class CloudBuildManifest
 	{
