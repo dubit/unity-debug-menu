@@ -5,6 +5,7 @@ namespace DUCK.DebugMenu.InfoPage
 	public class AbstractInfoSubPage : MonoBehaviour
 	{
 		private const int DEFAULT_CHILDREN = 2;
+
 		[SerializeField]
 		private RectTransform container;
 		[SerializeField]
