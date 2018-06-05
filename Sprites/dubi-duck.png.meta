@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5adcb1d7b37423e4eab2f7921f35b23f
-timeCreated: 1521194280
+guid: 2f0ec374fde1e449092fdddb61073e91
+timeCreated: 1527608728
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -60,54 +60,51 @@ TextureImporter:
     maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    androidETC2FallbackOverride: 0
   - buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    androidETC2FallbackOverride: 0
   - buildTarget: iPhone
     maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    androidETC2FallbackOverride: 0
   - buildTarget: Android
     maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    androidETC2FallbackOverride: 0
+  - buildTarget: WebGL
+    maxTextureSize: 128
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline:
-    - - {x: -98, y: 128}
-      - {x: -128, y: 64}
-      - {x: -128, y: -114}
-      - {x: -98, y: -128}
-      - {x: 106, y: -128}
-      - {x: 128, y: -82}
-      - {x: 128, y: 126}
-      - {x: 126, y: 128}
+    outline: []
     physicsShape: []
   spritePackingTag: 
   userData: 

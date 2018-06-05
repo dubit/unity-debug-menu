@@ -13,8 +13,8 @@ namespace DUCK.DebugMenu
 		private const KeyCode ACTIVATE_KEY = KeyCode.F7;
 
 		public event Action OnSummonRequested;
-		
-		public void Update()
+
+		private void Update()
 		{
 			if (Input.touchCount == TOUCH_AMOUNT || Input.GetKeyDown(ACTIVATE_KEY))
 			{

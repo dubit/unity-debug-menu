@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DUCK.DebugMenu.CloudBuild;
+using DUCK.DebugMenu.Email;
+using DUCK.DebugMenu.Logger;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,25 +35,21 @@ namespace DUCK.DebugMenu
 			}
 		}
 
+		public EmailPage EmailPage { get { return emailPage; } }
+		
 		[SerializeField]
 		private GameObject rootObject;
-		
+
 		[SerializeField]
 		private Button actionButtonTemplate;
 
+		[Header("Pages")]
 		[SerializeField]
-		private Text appVersionText;
-
-		[Header("App info")]
+		private CloudBuildPage cloudBuildPage;
 		[SerializeField]
-		private GameObject infoPage;
-
+		private DebugLogPage logPage;
 		[SerializeField]
-		private Text infoPageText;
-
-		[Header("Log")]
-		[SerializeField]
-		private DebugMenuLog logPage;
+		private EmailPage emailPage;
 
 		private readonly Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
@@ -64,9 +63,7 @@ namespace DUCK.DebugMenu
 
 			rootObject.gameObject.SetActive(false);
 
-			logPage.Initialise();
-
-			//NOTE When running tests you cannot use DontDestroyOnLoad in editor mode
+			// When running tests you cannot use DontDestroyOnLoad in editor mode
 			if (Application.isPlaying)
 			{
 				DontDestroyOnLoad(this);
@@ -75,15 +72,15 @@ namespace DUCK.DebugMenu
 
 		private void Start()
 		{
-			// find any summoners added to the same object
+			// Find any summoners added to the same object
 			var summoners = GetComponents<IDebugMenuSummoner>();
 
-			foreach(var summoner in summoners)
+			foreach (var summoner in summoners)
 			{
 				AddSummoner(summoner);
 			}
 
-			appVersionText.text = Application.version;
+			logPage.Initialize();
 		}
 
 		/// <summary>
@@ -117,17 +114,7 @@ namespace DUCK.DebugMenu
 		/// </summary>
 		public void ShowBuildInfo()
 		{
-			var buildManifest = Resources.Load<TextAsset>("UnityCloudBuildManifest.json");
-			if (buildManifest != null)
-			{
-				infoPageText.text = buildManifest.text;
-			}
-			else
-			{
-				infoPageText.text = "Cannot find UnityCloudBuildManifest.json, was this app built with cloud build?";
-			}
-			
-			infoPage.SetActive(true);
+			cloudBuildPage.gameObject.SetActive(true);
 		}
 
 		/// <summary>
@@ -141,7 +128,6 @@ namespace DUCK.DebugMenu
 		/// <summary>
 		/// Adds a new debug menu summoner
 		/// </summary>
-		/// <param name="summoner">The summoner</param>
 		public void AddSummoner(IDebugMenuSummoner summoner)
 		{
 			if (summoner == null) throw new ArgumentNullException("summoner");
@@ -151,28 +137,10 @@ namespace DUCK.DebugMenu
 		/// <summary>
 		/// Removes a debug menu summoner
 		/// </summary>
-		/// <param name="summoner">The debug menu summoner to be removed</param>
 		public void RemoveSummoner(IDebugMenuSummoner summoner)
 		{
 			if (summoner == null) throw new ArgumentNullException("summoner");
 			summoner.OnSummonRequested -= Show;
-		}
-
-		/// <summary>
-		/// Adds a new button to the debug menu, that will display info on a new page with a scroll view when pressed.
-		/// </summary>
-		/// <param name="text">The text for the button, (this works like an id must be unique to all buttons)</param>
-		/// <param name="getInfo">A function called to get the info, when the button is pressed</param>
-		public void AddInfoPageButton(string text, Func<string> getInfo)
-		{
-			if (string.IsNullOrEmpty(text)) throw new ArgumentNullException("text");
-			if (getInfo == null) throw new ArgumentNullException("getInfo");
-			
-			AddButton(text, () =>
-			{
-				infoPage.SetActive(true);
-				infoPageText.text = getInfo();
-			});
 		}
 
 		/// <summary>
@@ -216,7 +184,7 @@ namespace DUCK.DebugMenu
 			if (string.IsNullOrEmpty(oldText)) throw new ArgumentNullException("oldText");
 			if (string.IsNullOrEmpty(newText)) throw new ArgumentNullException("newText");
 
-			Button button = null;
+			Button button;
 			if (!buttons.TryGetValue(oldText, out button)) return;
 
 			buttons.Remove(oldText);
