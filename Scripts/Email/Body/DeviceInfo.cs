@@ -50,6 +50,10 @@ namespace DUCK.DebugMenu.Email.Body
 			stringBuilder.Append(deviceInfo.AspectRatio);
 			stringBuilder.Append("\n");
 
+			stringBuilder.Append("Screen DPI: ");
+			stringBuilder.Append(deviceInfo.ScreenDPI);
+			stringBuilder.Append("\n");
+
 			stringBuilder.Append("Graphics Device Name: ");
 			stringBuilder.Append(deviceInfo.GraphicsDeviceName);
 			stringBuilder.Append("\n");

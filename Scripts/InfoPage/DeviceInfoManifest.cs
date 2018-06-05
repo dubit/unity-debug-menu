@@ -15,6 +15,7 @@ namespace DUCK.DebugMenu.InfoPage
 		public string ProcessorCount { get; private set; }
 		public string ScreenResolution { get { return string.Format("{0}x{1} ({2})", Screen.width, Screen.height, Screen.height > Screen.width ? "Portrait" : "Landscape"); } }
 		public string AspectRatio { get; private set; }
+		public string ScreenDPI { get; private set; }
 		public string GraphicsDeviceName { get; private set; }
 		public string GraphicsDeviceType { get; private set; }
 		public string GraphicsDeviceVendor { get; private set; }
@@ -44,6 +45,7 @@ namespace DUCK.DebugMenu.InfoPage
 			AspectRatio = Screen.height > Screen.width
 				? ((float) Screen.height / Screen.width).ToString(CultureInfo.InvariantCulture)
 				: ((float) Screen.width / Screen.height).ToString(CultureInfo.InvariantCulture);
+			ScreenDPI = Screen.dpi.ToString(CultureInfo.InvariantCulture);
 			GraphicsDeviceName = SystemInfo.graphicsDeviceName;
 			GraphicsDeviceType = SystemInfo.graphicsDeviceType.ToString();
 			GraphicsDeviceVendor = SystemInfo.graphicsDeviceVendor;

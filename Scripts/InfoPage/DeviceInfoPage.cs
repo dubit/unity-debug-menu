@@ -23,6 +23,7 @@
 			AddElement("Processor Count", DeviceInfoManifest.ProcessorCount);
 			AddElement("Screen Resolution", DeviceInfoManifest.ScreenResolution);
 			AddElement("Screen Aspect Ratio", DeviceInfoManifest.AspectRatio);
+			AddElement("Screen DPI", DeviceInfoManifest.ScreenDPI);
 			AddElement("Graphics Device Name", DeviceInfoManifest.GraphicsDeviceName);
 			AddElement("Graphics Device Type", DeviceInfoManifest.DeviceType);
 			AddElement("Graphics Device Vendor", DeviceInfoManifest.GraphicsDeviceVendor);
