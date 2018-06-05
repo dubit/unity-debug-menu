@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DUCK.DebugMenu.CloudBuild;
+using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.Logger;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,19 +35,21 @@ namespace DUCK.DebugMenu
 			}
 		}
 
+		public EmailPage EmailPage { get { return emailPage; } }
+		
 		[SerializeField]
 		private GameObject rootObject;
 
 		[SerializeField]
 		private Button actionButtonTemplate;
 
-		[Header("Build info")]
+		[Header("Pages")]
 		[SerializeField]
 		private CloudBuildPage cloudBuildPage;
-
-		[Header("Log")]
 		[SerializeField]
 		private DebugLogPage logPage;
+		[SerializeField]
+		private EmailPage emailPage;
 
 		private readonly Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
@@ -76,6 +79,8 @@ namespace DUCK.DebugMenu
 			{
 				AddSummoner(summoner);
 			}
+
+			logPage.Initialize();
 		}
 
 		/// <summary>

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using DUCK.DebugMenu.Email;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +59,8 @@ namespace DUCK.DebugMenu.Logger
 		private Text stackTraceText;
 		[SerializeField]
 		private Text stackTraceLogText;
+		[SerializeField]
+		private Button emailStackTraceButton;
 
 		private readonly Queue<PendingLog> pendingLogs = new Queue<PendingLog>();
 		private readonly Color oddBackgroundColor = new Color(0.95f, 0.95f, 0.95f);
@@ -66,7 +70,7 @@ namespace DUCK.DebugMenu.Logger
 		private void Awake()
 		{
 			entryPrefab.gameObject.SetActive(false);
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(false);
 			clearButton.interactable = false;
 			clearButton.onClick.AddListener(Clear);
@@ -87,10 +91,20 @@ namespace DUCK.DebugMenu.Logger
 
 			stackTraceBackButton.onClick.AddListener(() =>
 			{
-				container.gameObject.SetActive(true);
+				scrollRect.gameObject.SetActive(true);
 				stackTraceContainer.gameObject.SetActive(false);
 			});
+			emailStackTraceButton.onClick.AddListener(() =>
+			{
+				gameObject.SetActive(false);
+				const string emailSubject = "Unity DebugMenu has reported a log.";
+				var emailBody = GenerateEmailBody(stackTraceLogText.text, stackTraceText.text);
+				DebugMenu.Instance.EmailPage.Show(emailSubject, emailBody, () => gameObject.SetActive(true));
+			});
+		}
 
+		public void Initialize()
+		{
 			Application.logMessageReceived += HandleLog;
 		}
 
@@ -111,7 +125,7 @@ namespace DUCK.DebugMenu.Logger
 				activeLogs[i].Background.color = i % 2 != 0 ? oddBackgroundColor : Color.white;
 			}
 
-			container.gameObject.SetActive(activeLogs.Length > 0);
+			scrollRect.gameObject.SetActive(activeLogs.Length > 0);
 
 			StartCoroutine(ScrollToBottom());
 		}
@@ -131,14 +145,14 @@ namespace DUCK.DebugMenu.Logger
 			allLogs.Clear();
 
 			clearButton.interactable = false;
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 		}
 
 		private void AddLogEntry(string text, string stackTrace, LogType logType)
 		{
-			if (!container.gameObject.activeSelf)
+			if (!scrollRect.gameObject.activeSelf)
 			{
-				container.gameObject.SetActive(true);
+				scrollRect.gameObject.SetActive(true);
 			}
 
 			clearButton.interactable = true;
@@ -158,7 +172,7 @@ namespace DUCK.DebugMenu.Logger
 
 		private void HandleStackTrace(string log, string stackTrace)
 		{
-			container.gameObject.SetActive(false);
+			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(true);
 			stackTraceLogText.text = log;
 			stackTraceText.text = stackTrace;
@@ -181,6 +195,20 @@ namespace DUCK.DebugMenu.Logger
 			}
 
 			StartCoroutine(ScrollToBottom());
+		}
+
+		private static string GenerateEmailBody(string log, string stackTrace)
+		{
+			var body = new StringBuilder(EmailPage.SEPERATOR);
+			body.Append("\n");
+			body.Append(log);
+			body.Append("\n");
+			body.Append(EmailPage.SEPERATOR);
+			body.Append("\n");
+			body.Append(stackTrace);
+			body.Append("\n");
+
+			return body.ToString();
 		}
 
 		private void OnDestroy()
