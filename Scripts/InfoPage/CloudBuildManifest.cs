@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DUCK.DebugMenu.CloudBuild
+namespace DUCK.DebugMenu.InfoPage
 {
 	public class CloudBuildManifest
 	{
@@ -13,7 +13,7 @@ namespace DUCK.DebugMenu.CloudBuild
 		public string UnityVersion { get { return unityVersion; } }
 		public string XcodeVersion { get { return xcodeVersion; } }
 		public string CloudBuildTargetName { get { return cloudBuildTargetName; } }
-		
+
 		[SerializeField]
 		private string scmCommitId;
 		[SerializeField]

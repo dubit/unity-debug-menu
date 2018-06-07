@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using DUCK.DebugMenu.CloudBuild;
 using DUCK.DebugMenu.Email;
+using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,7 +45,7 @@ namespace DUCK.DebugMenu
 
 		[Header("Pages")]
 		[SerializeField]
-		private CloudBuildPage cloudBuildPage;
+		private InformationPage infoPage;
 		[SerializeField]
 		private DebugLogPage logPage;
 		[SerializeField]
@@ -81,6 +81,7 @@ namespace DUCK.DebugMenu
 			}
 
 			logPage.Initialize();
+			infoPage.Initialize();
 		}
 
 		/// <summary>
@@ -112,9 +113,9 @@ namespace DUCK.DebugMenu
 		/// <summary>
 		/// Displays the BuildInfo (from build manifest)
 		/// </summary>
-		public void ShowBuildInfo()
+		public void ShowInfo()
 		{
-			cloudBuildPage.gameObject.SetActive(true);
+			infoPage.gameObject.SetActive(true);
 		}
 
 		/// <summary>
