@@ -4,19 +4,20 @@ using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DUCK.DebugMenu
 {
 	/// <summary>
 	/// A script that provides access and a simple API to control the debug menu.
-	/// 
+	///
 	/// DUCK ships with a ready-made prefab with this script already configured, just drop it into your startup scene,
 	/// then access it via the singleton.
-	/// 
-	/// To bring up the DebugMenu use an IDebugMenuSummoner and register it with the DebugMenu via AddSummoner, 
+	///
+	/// To bring up the DebugMenu use an IDebugMenuSummoner and register it with the DebugMenu via AddSummoner,
 	/// or add it to the same object as the debug menu, and it will find it on Start(). The ready-ade prefab that ships
-	/// with DUCK, has a DefaultDebugMenuSummoner. If you want to use your own logic to summon the debug menu then 
+	/// with DUCK, has a DefaultDebugMenuSummoner. If you want to use your own logic to summon the debug menu then
 	/// implement your own IDebugMenuSummoner and register it.
 	/// </summary>
 	public class DebugMenu : MonoBehaviour
@@ -36,9 +37,15 @@ namespace DUCK.DebugMenu
 		}
 
 		public EmailPage EmailPage { get { return emailPage; } }
-		
+
 		[SerializeField]
 		private GameObject rootObject;
+
+		[SerializeField]
+		private Button closeButton;
+
+		[SerializeField]
+		private Button logsButton;
 
 		[SerializeField]
 		private Button actionButtonTemplate;
@@ -90,6 +97,8 @@ namespace DUCK.DebugMenu
 		public void Show()
 		{
 			rootObject.SetActive(true);
+
+			EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
 
 			if (OnShow != null)
 			{
@@ -170,6 +179,8 @@ namespace DUCK.DebugMenu
 				actionButton.GetComponentInChildren<Text>().text = text;
 				actionButton.gameObject.SetActive(true);
 				buttons.Add(text, actionButton);
+
+				RebuildNavigation();
 			}
 		}
 
@@ -205,6 +216,8 @@ namespace DUCK.DebugMenu
 					}
 				});
 			}
+
+			RebuildNavigation();
 		}
 
 		/// <summary>
@@ -219,6 +232,38 @@ namespace DUCK.DebugMenu
 			{
 				Destroy(buttons[text].gameObject);
 				buttons.Remove(text);
+
+				RebuildNavigation();
+			}
+		}
+
+		private void RebuildNavigation()
+		{
+			var parent = actionButtonTemplate.transform.parent;
+			for (var i = 1; i < parent.childCount - 1; i++)
+			{
+				var child = parent.GetChild(i);
+				var next = parent.GetChild(i + 1);
+				var thisButton = child.GetComponent<Button>();
+				var nextButton = next.GetComponent<Button>();
+
+				var thisNavigation = thisButton.navigation;
+				var nextNavigation = nextButton.navigation;
+
+				thisNavigation.mode = nextNavigation.mode = Navigation.Mode.Explicit;
+				thisNavigation.selectOnDown = nextButton;
+				nextNavigation.selectOnUp = thisButton;
+
+				if (i == 1)
+				{
+					thisNavigation.selectOnUp = logsButton;
+					var logsButtonNavigation = logsButton.navigation;
+					logsButtonNavigation.selectOnDown = thisButton;
+					logsButton.navigation = logsButtonNavigation;
+				}
+
+				thisButton.navigation = thisNavigation;
+				nextButton.navigation = nextNavigation;
 			}
 		}
 	}
