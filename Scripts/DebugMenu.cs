@@ -50,6 +50,9 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private Button actionButtonTemplate;
 
+		[SerializeField]
+		private bool useNavigation;
+
 		[Header("Pages")]
 		[SerializeField]
 		private InformationPage infoPage;
@@ -98,7 +101,10 @@ namespace DUCK.DebugMenu
 		{
 			rootObject.SetActive(true);
 
-			EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
+			if (useNavigation)
+			{
+				EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
+			}
 
 			if (OnShow != null)
 			{
@@ -239,6 +245,8 @@ namespace DUCK.DebugMenu
 
 		private void RebuildNavigation()
 		{
+			if (!useNavigation) return;
+
 			var parent = actionButtonTemplate.transform.parent;
 			for (var i = 1; i < parent.childCount - 1; i++)
 			{
