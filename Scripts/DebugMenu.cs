@@ -41,17 +41,18 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private GameObject rootObject;
 
+		[Header("Buttons")]
 		[SerializeField]
 		private Button closeButton;
 
 		[SerializeField]
-		private Button logsButton;
+		private Button infoPageButton;
+
+		[SerializeField]
+		private Button logPageButton;
 
 		[SerializeField]
 		private Button actionButtonTemplate;
-
-		[SerializeField]
-		private bool useNavigation;
 
 		[Header("Pages")]
 		[SerializeField]
@@ -60,6 +61,10 @@ namespace DUCK.DebugMenu
 		private DebugLogPage logPage;
 		[SerializeField]
 		private EmailPage emailPage;
+
+		[Header("Navigation")]
+		[SerializeField]
+		private bool useNavigation;
 
 		private readonly Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
@@ -92,6 +97,17 @@ namespace DUCK.DebugMenu
 
 			logPage.Initialize();
 			infoPage.Initialize();
+
+			if (!useNavigation)
+			{
+				var navComponents = new List<MonoBehaviour>
+				{
+					GetComponentInChildren<NavigationBuilder>(true),
+					GetComponentInChildren<NavigationFocus>(true),
+					GetComponentInChildren<NavigationLinker>(true),
+				};
+				navComponents.ForEach(c => c.enabled = false);
+			}
 		}
 
 		/// <summary>
@@ -125,9 +141,6 @@ namespace DUCK.DebugMenu
 			}
 		}
 
-		/// <summary>
-		/// Displays the BuildInfo (from build manifest)
-		/// </summary>
 		public void ShowInfo()
 		{
 			infoPage.gameObject.SetActive(true);
@@ -185,8 +198,6 @@ namespace DUCK.DebugMenu
 				actionButton.GetComponentInChildren<Text>().text = text;
 				actionButton.gameObject.SetActive(true);
 				buttons.Add(text, actionButton);
-
-				RebuildNavigation();
 			}
 		}
 
@@ -222,8 +233,6 @@ namespace DUCK.DebugMenu
 					}
 				});
 			}
-
-			RebuildNavigation();
 		}
 
 		/// <summary>
@@ -238,40 +247,6 @@ namespace DUCK.DebugMenu
 			{
 				Destroy(buttons[text].gameObject);
 				buttons.Remove(text);
-
-				RebuildNavigation();
-			}
-		}
-
-		private void RebuildNavigation()
-		{
-			if (!useNavigation) return;
-
-			var parent = actionButtonTemplate.transform.parent;
-			for (var i = 1; i < parent.childCount - 1; i++)
-			{
-				var child = parent.GetChild(i);
-				var next = parent.GetChild(i + 1);
-				var thisButton = child.GetComponent<Button>();
-				var nextButton = next.GetComponent<Button>();
-
-				var thisNavigation = thisButton.navigation;
-				var nextNavigation = nextButton.navigation;
-
-				thisNavigation.mode = nextNavigation.mode = Navigation.Mode.Explicit;
-				thisNavigation.selectOnDown = nextButton;
-				nextNavigation.selectOnUp = thisButton;
-
-				if (i == 1)
-				{
-					thisNavigation.selectOnUp = logsButton;
-					var logsButtonNavigation = logsButton.navigation;
-					logsButtonNavigation.selectOnDown = thisButton;
-					logsButton.navigation = logsButtonNavigation;
-				}
-
-				thisButton.navigation = thisNavigation;
-				nextButton.navigation = nextNavigation;
 			}
 		}
 	}
