@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 224646788910622418}
   - component: {fileID: 222441792779974392}
   - component: {fileID: 114323717363691648}
+  - component: {fileID: 114815185419832704}
   m_Layer: 5
   m_Name: CloudBuildInfoSubPage
   m_TagString: Untagged
@@ -1589,6 +1590,7 @@ GameObject:
   - component: {fileID: 224243239277106972}
   - component: {fileID: 222137490345117880}
   - component: {fileID: 114600372538343970}
+  - component: {fileID: 114551157068435236}
   m_Layer: 5
   m_Name: DeviceInfoSubPage
   m_TagString: Untagged
@@ -4361,7 +4363,7 @@ MonoBehaviour:
   infoPage: {fileID: 114745247209445034}
   logPage: {fileID: 114672219277833058}
   emailPage: {fileID: 114595026789909432}
-  useNavigation: 1
+  useNavigation: 0
 --- !u!114 &114422346170556612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4684,10 +4686,10 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 114658212631577694}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4769,10 +4771,10 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 114658212631577694}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4869,6 +4871,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114551157068435236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1720928600380468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55244450e1ff4df3b2e73988c6267e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 1
+  from: {fileID: 114658212631577694}
+  to: {fileID: 114518394009102572}
 --- !u!114 &114565767566603474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6213,6 +6229,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114815185419832704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1381445831079270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55244450e1ff4df3b2e73988c6267e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 1
+  from: {fileID: 114658212631577694}
+  to: {fileID: 114484825049719676}
 --- !u!114 &114820516587963880
 MonoBehaviour:
   m_ObjectHideFlags: 1
