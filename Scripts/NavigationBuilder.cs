@@ -16,6 +16,8 @@ namespace DUCK.DebugMenu
 
 		private void OnTransformChildrenChanged()
 		{
+			if (!enabled) return;
+
 			bool foundFirst = false;
 
 			var parent = transform;

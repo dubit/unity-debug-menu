@@ -100,12 +100,10 @@ namespace DUCK.DebugMenu
 
 			if (!useNavigation)
 			{
-				var navComponents = new List<MonoBehaviour>
-				{
-					GetComponentInChildren<NavigationBuilder>(true),
-					GetComponentInChildren<NavigationFocus>(true),
-					GetComponentInChildren<NavigationLinker>(true),
-				};
+				var navComponents = new List<MonoBehaviour>();
+				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
 				navComponents.ForEach(c => c.enabled = false);
 			}
 		}
