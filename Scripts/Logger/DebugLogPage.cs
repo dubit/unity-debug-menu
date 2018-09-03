@@ -203,6 +203,7 @@ namespace DUCK.DebugMenu.Logger
 			body.Append("\n");
 			body.Append(log);
 			body.Append("\n");
+			body.Append("\n");
 			body.Append(EmailPage.SEPERATOR);
 			body.Append("\n");
 			body.Append(stackTrace);

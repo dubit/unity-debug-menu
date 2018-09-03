@@ -1,126 +1,120 @@
 ﻿using System.Text;
-using UnityEngine;
+using DUCK.DebugMenu.InfoPage;
 
 namespace DUCK.DebugMenu.Email.Body
 {
 	public static class DeviceInfo
 	{
-		private static string CACHED;
-
-		public static string Generate()
+		public static string Generate(DeviceInfoManifest deviceInfo)
 		{
-			if (!string.IsNullOrEmpty(CACHED))
-			{
-				return CACHED;
-			}
-
 			var stringBuilder = new StringBuilder(EmailPage.SEPERATOR);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Device Name: ");
-			stringBuilder.Append(SystemInfo.deviceName);
+			stringBuilder.Append(deviceInfo.DeviceName);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Device Model: ");
-			stringBuilder.Append(SystemInfo.deviceModel);
+			stringBuilder.Append(deviceInfo.DeviceModel);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Device Type: ");
-			stringBuilder.Append(SystemInfo.deviceType);
+			stringBuilder.Append(deviceInfo.DeviceType);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Operating System: ");
-			stringBuilder.Append(SystemInfo.operatingSystem);
+			stringBuilder.Append(deviceInfo.OperatingSystem);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Operating System Family: ");
-			stringBuilder.Append(SystemInfo.operatingSystemFamily);
+			stringBuilder.Append(deviceInfo.OperatingSystemFamily);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("System Memory Size: ");
-			stringBuilder.Append(SystemInfo.systemMemorySize);
+			stringBuilder.Append(deviceInfo.SystemMemorySize);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Processor Type: ");
-			stringBuilder.Append(SystemInfo.processorType);
+			stringBuilder.Append(deviceInfo.ProcessorType);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Processor Count: ");
-			stringBuilder.Append(SystemInfo.processorCount);
+			stringBuilder.Append(deviceInfo.ProcessorCount);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Screen Resolution: ");
-			stringBuilder.Append(Screen.width);
-			stringBuilder.Append("x");
-			stringBuilder.Append(Screen.height);
+			stringBuilder.Append(deviceInfo.ScreenResolution);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Screen Aspect Ratio: ");
-			stringBuilder.Append((float) Screen.width / Screen.height);
+			stringBuilder.Append(deviceInfo.AspectRatio);
+			stringBuilder.Append("\n");
+
+			stringBuilder.Append("Screen DPI: ");
+			stringBuilder.Append(deviceInfo.ScreenDPI);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics Device Name: ");
-			stringBuilder.Append(SystemInfo.graphicsDeviceName);
+			stringBuilder.Append(deviceInfo.GraphicsDeviceName);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics DeviceType: ");
-			stringBuilder.Append(SystemInfo.graphicsDeviceType);
+			stringBuilder.Append(deviceInfo.GraphicsDeviceType);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics Device Vendor: ");
-			stringBuilder.Append(SystemInfo.graphicsDeviceVendor);
+			stringBuilder.Append(deviceInfo.GraphicsDeviceVendor);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics Memory Size: ");
-			stringBuilder.Append(SystemInfo.graphicsMemorySize);
+			stringBuilder.Append(deviceInfo.GraphicsMemorySize);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics Shader Level: ");
-			stringBuilder.Append(SystemInfo.graphicsShaderLevel);
+			stringBuilder.Append(deviceInfo.GraphicsShaderLevel);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Graphics Multi Threaded: ");
-			stringBuilder.Append(SystemInfo.graphicsMultiThreaded);
+			stringBuilder.Append(deviceInfo.GraphicsMultiThreaded);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Battery Status: ");
-			stringBuilder.Append(SystemInfo.batteryStatus);
+			stringBuilder.Append(deviceInfo.BatteryStatus);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Battery Level: ");
-			stringBuilder.Append(SystemInfo.batteryLevel * 100);
-			stringBuilder.Append("%");
+			stringBuilder.Append(deviceInfo.BatteryLevel);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Vibration: ");
-			stringBuilder.Append(SystemInfo.supportsVibration);
+			stringBuilder.Append(deviceInfo.SupportsVibration);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Shadows: ");
-			stringBuilder.Append(SystemInfo.supportsShadows);
+			stringBuilder.Append(deviceInfo.SupportsShadows);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Instancing: ");
-			stringBuilder.Append(SystemInfo.supportsInstancing);
+			stringBuilder.Append(deviceInfo.SupportsInstancing);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Location Service: ");
-			stringBuilder.Append(SystemInfo.supportsLocationService);
+			stringBuilder.Append(deviceInfo.SupportsLocationService);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Accelerometer: ");
-			stringBuilder.Append(SystemInfo.supportsAccelerometer);
+			stringBuilder.Append(deviceInfo.SupportsAccelerometer);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Gyroscope: ");
-			stringBuilder.Append(SystemInfo.supportsGyroscope);
+			stringBuilder.Append(deviceInfo.SupportsGyroscope);
 			stringBuilder.Append("\n");
 
 			stringBuilder.Append("Supports Audio: ");
-			stringBuilder.Append(SystemInfo.supportsAudio);
+			stringBuilder.Append(deviceInfo.SupportsAudio);
 			stringBuilder.Append("\n");
 
-			return CACHED = stringBuilder.ToString();
+			return stringBuilder.ToString();
 		}
 	}
 }

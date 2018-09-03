@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using DUCK.DebugMenu.CloudBuild;
 using DUCK.DebugMenu.Email;
+using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DUCK.DebugMenu
 {
 	/// <summary>
 	/// A script that provides access and a simple API to control the debug menu.
-	/// 
+	///
 	/// DUCK ships with a ready-made prefab with this script already configured, just drop it into your startup scene,
 	/// then access it via the singleton.
-	/// 
-	/// To bring up the DebugMenu use an IDebugMenuSummoner and register it with the DebugMenu via AddSummoner, 
+	///
+	/// To bring up the DebugMenu use an IDebugMenuSummoner and register it with the DebugMenu via AddSummoner,
 	/// or add it to the same object as the debug menu, and it will find it on Start(). The ready-ade prefab that ships
-	/// with DUCK, has a DefaultDebugMenuSummoner. If you want to use your own logic to summon the debug menu then 
+	/// with DUCK, has a DefaultDebugMenuSummoner. If you want to use your own logic to summon the debug menu then
 	/// implement your own IDebugMenuSummoner and register it.
 	/// </summary>
 	public class DebugMenu : MonoBehaviour
@@ -36,20 +37,34 @@ namespace DUCK.DebugMenu
 		}
 
 		public EmailPage EmailPage { get { return emailPage; } }
-		
+
 		[SerializeField]
 		private GameObject rootObject;
+
+		[Header("Buttons")]
+		[SerializeField]
+		private Button closeButton;
+
+		[SerializeField]
+		private Button infoPageButton;
+
+		[SerializeField]
+		private Button logPageButton;
 
 		[SerializeField]
 		private Button actionButtonTemplate;
 
 		[Header("Pages")]
 		[SerializeField]
-		private CloudBuildPage cloudBuildPage;
+		private InformationPage infoPage;
 		[SerializeField]
 		private DebugLogPage logPage;
 		[SerializeField]
 		private EmailPage emailPage;
+
+		[Header("Navigation")]
+		[SerializeField]
+		private bool useNavigation;
 
 		private readonly Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
@@ -81,6 +96,16 @@ namespace DUCK.DebugMenu
 			}
 
 			logPage.Initialize();
+			infoPage.Initialize();
+
+			if (!useNavigation)
+			{
+				var navComponents = new List<MonoBehaviour>();
+				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
+				navComponents.ForEach(c => c.enabled = false);
+			}
 		}
 
 		/// <summary>
@@ -89,6 +114,11 @@ namespace DUCK.DebugMenu
 		public void Show()
 		{
 			rootObject.SetActive(true);
+
+			if (useNavigation)
+			{
+				EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
+			}
 
 			if (OnShow != null)
 			{
@@ -109,12 +139,9 @@ namespace DUCK.DebugMenu
 			}
 		}
 
-		/// <summary>
-		/// Displays the BuildInfo (from build manifest)
-		/// </summary>
-		public void ShowBuildInfo()
+		public void ShowInfo()
 		{
-			cloudBuildPage.gameObject.SetActive(true);
+			infoPage.gameObject.SetActive(true);
 		}
 
 		/// <summary>

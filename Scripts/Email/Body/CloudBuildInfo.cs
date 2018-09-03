@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using DUCK.DebugMenu.CloudBuild;
+using DUCK.DebugMenu.InfoPage;
 using UnityEngine;
 
 namespace DUCK.DebugMenu.Email.Body
