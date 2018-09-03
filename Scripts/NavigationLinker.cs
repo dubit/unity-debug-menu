@@ -6,7 +6,7 @@ namespace DUCK.DebugMenu
 {
 	public class NavigationLinker : MonoBehaviour
 	{
-		enum Direction
+		private enum Direction
 		{
 			Up,
 			Down,
