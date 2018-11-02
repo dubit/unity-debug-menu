@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace DUCK.DebugMenu
@@ -16,6 +17,8 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private bool focusOnEnable = true;
 
+		private int framesUntilFocus;
+
 		private void OnEnable()
 		{
 			if (focusOnEnable)
@@ -26,10 +29,13 @@ namespace DUCK.DebugMenu
 
 		public void Focus()
 		{
-			if (enabled)
-			{
-				EventSystem.current.SetSelectedGameObject(target);
-			}
+			StartCoroutine(FocusCoroutine());
+		}
+
+		private IEnumerator FocusCoroutine()
+		{
+			yield return new WaitForEndOfFrame();
+			EventSystem.current.SetSelectedGameObject(target);
 		}
 	}
 }

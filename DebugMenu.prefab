@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 222692049801923064}
   - component: {fileID: 114204577337191230}
   - component: {fileID: 114605124136245606}
+  - component: {fileID: 114793642586442620}
   m_Layer: 5
   m_Name: LogButton
   m_TagString: Untagged
@@ -556,7 +557,6 @@ GameObject:
   - component: {fileID: 222962004440430148}
   - component: {fileID: 114678390878238992}
   - component: {fileID: 114658212631577694}
-  - component: {fileID: 114522852238843404}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -751,7 +751,6 @@ GameObject:
   - component: {fileID: 222137420804710190}
   - component: {fileID: 114005002647861286}
   - component: {fileID: 114643001718472902}
-  - component: {fileID: 114010163155667360}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -904,6 +903,7 @@ GameObject:
   - component: {fileID: 222935129442764772}
   - component: {fileID: 114323809948099238}
   - component: {fileID: 114422346170556612}
+  - component: {fileID: 114353150334519548}
   m_Layer: 5
   m_Name: BuildInfoButton
   m_TagString: Untagged
@@ -2200,19 +2200,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114010163155667360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1334455801205160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1126223719816108}
-  focusOnEnable: 0
 --- !u!114 &114012651523041904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2227,7 +2214,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114643001718472902}
     m_SelectOnRight: {fileID: 114386622747533172}
   m_Transition: 1
@@ -2577,7 +2564,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114386622747533172}
     m_SelectOnRight: {fileID: 114671877734637756}
   m_Transition: 1
@@ -2777,10 +2764,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114643001718472902}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
   m_Colors:
@@ -3522,7 +3509,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114484825049719676}
     m_SelectOnLeft: {fileID: 114277631700706876}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -3900,6 +3887,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114353150334519548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397067046119564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1397067046119564}
+  focusOnEnable: 0
 --- !u!114 &114358837854310806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4170,7 +4170,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114012651523041904}
     m_SelectOnRight: {fileID: 114078993922106736}
   m_Transition: 1
@@ -4784,19 +4784,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114522852238843404
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1269985368294464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1397067046119564}
-  focusOnEnable: 0
 --- !u!114 &114541220383992686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5177,7 +5164,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 114012651523041904}
   m_Transition: 1
@@ -5213,7 +5200,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114010163155667360}
+      - m_Target: {fileID: 114793642586442620}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -5295,7 +5282,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114522852238843404}
+      - m_Target: {fileID: 114353150334519548}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -5347,7 +5334,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114078993922106736}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -5986,6 +5973,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114793642586442620
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126223719816108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1126223719816108}
+  focusOnEnable: 0
 --- !u!114 &114798921806935350
 MonoBehaviour:
   m_ObjectHideFlags: 1
