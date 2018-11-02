@@ -751,6 +751,7 @@ GameObject:
   - component: {fileID: 222137420804710190}
   - component: {fileID: 114005002647861286}
   - component: {fileID: 114643001718472902}
+  - component: {fileID: 114040156233374544}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1947,7 +1948,6 @@ GameObject:
   - component: {fileID: 222652767210213734}
   - component: {fileID: 114959196291125910}
   - component: {fileID: 114351813213682152}
-  - component: {fileID: 114715601678676320}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2437,6 +2437,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1240887752343238}
+  focusOnEnable: 0
+--- !u!114 &114040156233374544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334455801205160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1334455801205160}
   focusOnEnable: 0
 --- !u!114 &114041955170843916
 MonoBehaviour:
@@ -3874,7 +3887,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114715601678676320}
+      - m_Target: {fileID: 114040156233374544}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -5667,19 +5680,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114715601678676320
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1904969562660906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1334455801205160}
-  focusOnEnable: 0
 --- !u!114 &114729839558085920
 MonoBehaviour:
   m_ObjectHideFlags: 1
