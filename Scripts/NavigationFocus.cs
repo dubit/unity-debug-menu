@@ -17,8 +17,6 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private bool focusOnEnable = true;
 
-		private int framesUntilFocus;
-
 		private void OnEnable()
 		{
 			if (focusOnEnable)
