@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 222692049801923064}
   - component: {fileID: 114204577337191230}
   - component: {fileID: 114605124136245606}
+  - component: {fileID: 114793642586442620}
   m_Layer: 5
   m_Name: LogButton
   m_TagString: Untagged
@@ -556,7 +557,6 @@ GameObject:
   - component: {fileID: 222962004440430148}
   - component: {fileID: 114678390878238992}
   - component: {fileID: 114658212631577694}
-  - component: {fileID: 114522852238843404}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 222137420804710190}
   - component: {fileID: 114005002647861286}
   - component: {fileID: 114643001718472902}
-  - component: {fileID: 114010163155667360}
+  - component: {fileID: 114040156233374544}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -904,6 +904,7 @@ GameObject:
   - component: {fileID: 222935129442764772}
   - component: {fileID: 114323809948099238}
   - component: {fileID: 114422346170556612}
+  - component: {fileID: 114353150334519548}
   m_Layer: 5
   m_Name: BuildInfoButton
   m_TagString: Untagged
@@ -984,7 +985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1408945347939894
 GameObject:
   m_ObjectHideFlags: 1
@@ -1279,23 +1280,6 @@ GameObject:
   - component: {fileID: 114260466703604358}
   m_Layer: 5
   m_Name: Seperator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1593987122896658
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4743360161205472}
-  - component: {fileID: 114573495268019790}
-  - component: {fileID: 114687021814161250}
-  m_Layer: 0
-  m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1658,7 +1642,6 @@ GameObject:
   - component: {fileID: 4239997596910718}
   - component: {fileID: 114420445526007646}
   - component: {fileID: 114125191596779614}
-  - component: {fileID: 114096666122321534}
   m_Layer: 0
   m_Name: DebugMenu
   m_TagString: Untagged
@@ -1965,7 +1948,6 @@ GameObject:
   - component: {fileID: 222652767210213734}
   - component: {fileID: 114959196291125910}
   - component: {fileID: 114351813213682152}
-  - component: {fileID: 114715601678676320}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2161,22 +2143,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224750570973556950}
-  - {fileID: 4743360161205472}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4743360161205472
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1593987122896658}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4239997596910718}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114005002647861286
 MonoBehaviour:
@@ -2232,19 +2200,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114010163155667360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1334455801205160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1126223719816108}
-  focusOnEnable: 0
 --- !u!114 &114012651523041904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2259,7 +2214,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114643001718472902}
     m_SelectOnRight: {fileID: 114386622747533172}
   m_Transition: 1
@@ -2483,6 +2438,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1240887752343238}
   focusOnEnable: 0
+--- !u!114 &114040156233374544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334455801205160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1334455801205160}
+  focusOnEnable: 0
 --- !u!114 &114041955170843916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2609,7 +2577,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114386622747533172}
     m_SelectOnRight: {fileID: 114671877734637756}
   m_Transition: 1
@@ -2669,17 +2637,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Text
---- !u!114 &114096666122321534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1752940709015496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad0e94d3a6a45be88790960db29621a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114101809962024672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2820,10 +2777,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114643001718472902}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
   m_Colors:
@@ -3565,7 +3522,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114484825049719676}
     m_SelectOnLeft: {fileID: 114277631700706876}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -3930,7 +3887,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114715601678676320}
+      - m_Target: {fileID: 114040156233374544}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -3943,6 +3900,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114353150334519548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397067046119564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1397067046119564}
+  focusOnEnable: 0
 --- !u!114 &114358837854310806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4213,7 +4183,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114012651523041904}
     m_SelectOnRight: {fileID: 114078993922106736}
   m_Transition: 1
@@ -4827,19 +4797,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114522852238843404
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1269985368294464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1397067046119564}
-  focusOnEnable: 0
 --- !u!114 &114541220383992686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4912,20 +4869,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114573495268019790
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1593987122896658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
 --- !u!114 &114588501978317806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5234,7 +5177,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 114012651523041904}
   m_Transition: 1
@@ -5270,7 +5213,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114010163155667360}
+      - m_Target: {fileID: 114793642586442620}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -5352,7 +5295,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114522852238843404}
+      - m_Target: {fileID: 114353150334519548}
         m_MethodName: Focus
         m_Mode: 1
         m_Arguments:
@@ -5404,7 +5347,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 114143172378084252}
     m_SelectOnLeft: {fileID: 114078993922106736}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -5557,24 +5500,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114687021814161250
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1593987122896658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &114687698163182708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5755,19 +5680,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114715601678676320
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1904969562660906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1334455801205160}
-  focusOnEnable: 0
 --- !u!114 &114729839558085920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6061,6 +5973,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114793642586442620
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126223719816108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8937aa54b8d41e6b5e0aa9744925eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1126223719816108}
+  focusOnEnable: 0
 --- !u!114 &114798921806935350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7886,7 +7811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224019771148858144
@@ -8247,7 +8172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -9.999878, y: 0}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224224852281116726
@@ -8435,7 +8360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224270267685537852
@@ -8801,7 +8726,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -1002.6575}
+  m_SizeDelta: {x: 0, y: -922}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224471919029461770
 RectTransform:
@@ -8882,7 +8807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224505072207053142
@@ -9144,7 +9069,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224578350901473530
@@ -9840,7 +9765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224917771040901346
@@ -10012,7 +9937,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -63.99995}
+  m_AnchoredPosition: {x: 0, y: -64}
   m_SizeDelta: {x: -30, y: -158}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224957285756307266
