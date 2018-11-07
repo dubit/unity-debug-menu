@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DUCK.DebugMenu
+namespace DUCK.DebugMenu.Navigation
 {
 	/// <summary>
 	/// NavigationBuilder:
@@ -36,7 +36,7 @@ namespace DUCK.DebugMenu
 				var thisNavigation = thisItem.navigation;
 				var nextNavigation = nextItem.navigation;
 
-				thisNavigation.mode = nextNavigation.mode = Navigation.Mode.Explicit;
+				thisNavigation.mode = nextNavigation.mode = UnityEngine.UI.Navigation.Mode.Explicit;
 				thisNavigation.selectOnDown = nextItem;
 				nextNavigation.selectOnUp = thisItem;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DUCK.DebugMenu
+namespace DUCK.DebugMenu.Navigation
 {
 	/// <summary>
 	/// Navigation Focus:

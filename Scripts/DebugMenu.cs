@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
+using DUCK.DebugMenu.Navigation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
