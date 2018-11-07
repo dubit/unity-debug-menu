@@ -12,13 +12,24 @@ namespace DUCK.DebugMenu.Navigation
 	public class NavigationBuilder : MonoBehaviour
 	{
 		[SerializeField]
-		private Selectable topElement;
+		private Selectable[] topElements;
+
+		[SerializeField]
+		private bool topElementsJumpToBottomOfList;
+
+		[SerializeField]
+		private Selectable leftElement;
+
+		[SerializeField]
+		private Selectable rightElement;
 
 		private void OnTransformChildrenChanged()
 		{
 			if (!enabled) return;
 
 			bool foundFirst = false;
+
+			Selectable last = null;
 
 			var parent = transform;
 			for (var i = 1; i < parent.childCount - 1; i++)
@@ -40,17 +51,38 @@ namespace DUCK.DebugMenu.Navigation
 				thisNavigation.selectOnDown = nextItem;
 				nextNavigation.selectOnUp = thisItem;
 
+				thisNavigation.selectOnLeft = leftElement;
+				thisNavigation.selectOnRight = rightElement;
+
 				if (!foundFirst)
 				{
 					foundFirst = true;
-					thisNavigation.selectOnUp = topElement;
-					var logsButtonNavigation = topElement.navigation;
-					logsButtonNavigation.selectOnDown = thisItem;
-					topElement.navigation = logsButtonNavigation;
+					thisNavigation.selectOnUp = topElements[0];
+					if (!topElementsJumpToBottomOfList)
+					{
+						HookTopElementsDownTo(thisItem);
+					}
 				}
 
 				thisItem.navigation = thisNavigation;
 				nextItem.navigation = nextNavigation;
+
+				last = nextItem;
+			}
+
+			if (topElementsJumpToBottomOfList)
+			{
+				HookTopElementsDownTo(last);
+			}
+		}
+
+		private void HookTopElementsDownTo(Selectable item)
+		{
+			foreach (var topElement in topElements)
+			{
+				var topElementNavigation = topElement.navigation;
+				topElementNavigation.selectOnDown = item;
+				topElement.navigation = topElementNavigation;
 			}
 		}
 	}
