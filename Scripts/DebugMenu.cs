@@ -105,6 +105,7 @@ namespace DUCK.DebugMenu
 				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigableScrollElement>(true));
 				navComponents.ForEach(c => c.enabled = false);
 			}
 		}
