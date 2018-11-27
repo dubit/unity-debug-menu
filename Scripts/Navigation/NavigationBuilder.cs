@@ -27,52 +27,44 @@ namespace DUCK.DebugMenu.Navigation
 		{
 			if (!enabled) return;
 
-			bool foundFirst = false;
-
-			Selectable last = null;
+			Selectable previousItem = null;
 
 			var parent = transform;
-			for (var i = 1; i < parent.childCount - 1; i++)
+			for (var i = 1; i < parent.childCount; i++)
 			{
 				var child = parent.GetChild(i);
-				if (!child.gameObject.activeSelf)
-				{
-					continue;
-				}
 
-				var next = parent.GetChild(i + 1);
 				var thisItem = child.GetComponent<Selectable>();
-				var nextItem = next.GetComponent<Selectable>();
-
 				var thisNavigation = thisItem.navigation;
-				var nextNavigation = nextItem.navigation;
 
-				thisNavigation.mode = nextNavigation.mode = UnityEngine.UI.Navigation.Mode.Explicit;
-				thisNavigation.selectOnDown = nextItem;
-				nextNavigation.selectOnUp = thisItem;
-
-				thisNavigation.selectOnLeft = leftElement;
-				thisNavigation.selectOnRight = rightElement;
-
-				if (!foundFirst)
+				if (previousItem == null)
 				{
-					foundFirst = true;
+					// no previous (this is the first element)
 					thisNavigation.selectOnUp = topElements[0];
 					if (!topElementsJumpToBottomOfList)
 					{
 						HookTopElementsDownTo(thisItem);
 					}
 				}
+				else
+				{
+					var previousNavigation = previousItem.navigation;
+					previousNavigation.mode = thisNavigation.mode = UnityEngine.UI.Navigation.Mode.Explicit;
+					previousNavigation.selectOnDown = thisItem;
+					thisNavigation.selectOnUp = previousItem;
+
+					thisNavigation.selectOnLeft = leftElement;
+					thisNavigation.selectOnRight = rightElement;
+					previousItem.navigation = previousNavigation;
+				}
 
 				thisItem.navigation = thisNavigation;
-				nextItem.navigation = nextNavigation;
-
-				last = nextItem;
+				previousItem = thisItem;
 			}
 
 			if (topElementsJumpToBottomOfList)
 			{
-				HookTopElementsDownTo(last);
+				HookTopElementsDownTo(previousItem);
 			}
 		}
 
