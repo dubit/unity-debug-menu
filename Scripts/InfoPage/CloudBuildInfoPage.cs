@@ -6,7 +6,7 @@ namespace DUCK.DebugMenu.InfoPage
 	{
 		public CloudBuildManifest BuildManifest { get; private set; }
 
-		public void Initialize()
+		public override void Initialize()
 		{
 			var buildManifestJson = Resources.Load<TextAsset>("UnityCloudBuildManifest.json");
 			BuildManifest = buildManifestJson
