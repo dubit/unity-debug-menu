@@ -35,14 +35,15 @@ namespace DUCK.DebugMenu.Navigation
 
 		public void OnSelect(BaseEventData eventData)
 		{
-			// work out if this element is fully visible to the scroll view
+			// get world space corners of our own rect
+			var corners = new Vector3[4];
+			((RectTransform) transform).GetWorldCorners(corners);
 
-			// now get world space corners of our own rect
-			Vector3[] corners = new Vector3[4];
-			((RectTransform)transform).GetWorldCorners(corners);
+			// get top and bottom y values
 			var bottom = rootCanvasTransform.InverseTransformPoint(corners[0]).y;
 			var top = rootCanvasTransform.InverseTransformPoint(corners[1]).y;
 
+			// if it's not on screen then start tweening the scroll rect to a visible position
 			if (top > scrollRectTop || bottom < scrollRectBottom)
 			{
 				StartCoroutine(TweenScrollRect(scrollRectTop - top, bottom - scrollRectBottom));
