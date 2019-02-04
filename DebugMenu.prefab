@@ -1243,6 +1243,7 @@ GameObject:
   - component: {fileID: 114288165131515064}
   - component: {fileID: 114617032129425444}
   - component: {fileID: 114613379116096418}
+  - component: {fileID: 114781624869769478}
   m_Layer: 5
   m_Name: LogEntry
   m_TagString: Untagged
@@ -2056,6 +2057,7 @@ GameObject:
   - component: {fileID: 114323860496785784}
   - component: {fileID: 114615334361687818}
   - component: {fileID: 114027617149964568}
+  - component: {fileID: 114014561139697712}
   m_Layer: 5
   m_Name: ActionButton
   m_TagString: Untagged
@@ -2241,6 +2243,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114014561139697712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985517511418170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f95bb21af6466b86b37d60ba497dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 5000
 --- !u!114 &114026527310116826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5919,6 +5933,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114781624869769478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551095865189504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f95bb21af6466b86b37d60ba497dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 5000
 --- !u!114 &114782782730678628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6076,7 +6102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bed66991dc4a15a73aafce298df815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topElement: {fileID: 114643001718472902}
+  topElements:
+  - {fileID: 114643001718472902}
+  - {fileID: 114078993922106736}
+  - {fileID: 114386622747533172}
+  - {fileID: 114671877734637756}
+  - {fileID: 114012651523041904}
+  topElementsJumpToBottomOfList: 1
+  leftElement: {fileID: 114643001718472902}
+  rightElement: {fileID: 114671877734637756}
 --- !u!114 &114803739683461416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6533,7 +6567,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bed66991dc4a15a73aafce298df815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topElement: {fileID: 114605124136245606}
+  topElements:
+  - {fileID: 114605124136245606}
+  - {fileID: 114980657277255878}
+  - {fileID: 114999159480291688}
+  - {fileID: 114422346170556612}
+  topElementsJumpToBottomOfList: 0
+  leftElement: {fileID: 0}
+  rightElement: {fileID: 0}
 --- !u!114 &114921448972051080
 MonoBehaviour:
   m_ObjectHideFlags: 1

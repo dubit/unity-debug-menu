@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
+using DUCK.DebugMenu.Navigation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -104,6 +105,7 @@ namespace DUCK.DebugMenu
 				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigableScrollElement>(true));
 				navComponents.ForEach(c => c.enabled = false);
 			}
 		}
