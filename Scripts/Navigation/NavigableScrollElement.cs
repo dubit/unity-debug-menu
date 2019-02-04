@@ -35,6 +35,8 @@ namespace DUCK.DebugMenu.Navigation
 
 		public void OnSelect(BaseEventData eventData)
 		{
+			if (rootCanvasTransform == null) return;
+
 			// get world space corners of our own rect
 			var corners = new Vector3[4];
 			((RectTransform) transform).GetWorldCorners(corners);
