@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DUCK.DebugMenu.InfoPage
@@ -10,9 +11,10 @@ namespace DUCK.DebugMenu.InfoPage
 		private Button buildInfoButton;
 		[SerializeField]
 		private Button deviceInfoButton;
+		[FormerlySerializedAs("cloudBuildInfoPage")]
 		[Header("Pages")]
 		[SerializeField]
-		private CloudBuildInfoPage cloudBuildInfoPage;
+		private AbstractInfoSubPage buildInfoPage;
 		[SerializeField]
 		private DeviceInfoPage deviceInfoPage;
 
@@ -27,12 +29,12 @@ namespace DUCK.DebugMenu.InfoPage
 		public void Initialize()
 		{
 			deviceInfoPage.Initialize();
-			cloudBuildInfoPage.Initialize();
+			buildInfoPage.Initialize();
 		}
 
 		private void ShowBuildInfo()
 		{
-			cloudBuildInfoPage.gameObject.SetActive(true);
+			buildInfoPage.gameObject.SetActive(true);
 			deviceInfoPage.gameObject.SetActive(false);
 			buildInfoButton.interactable = false;
 			deviceInfoButton.interactable = true;
@@ -40,7 +42,7 @@ namespace DUCK.DebugMenu.InfoPage
 
 		private void ShowDeviceInfo()
 		{
-			cloudBuildInfoPage.gameObject.SetActive(false);
+			buildInfoPage.gameObject.SetActive(false);
 			deviceInfoPage.gameObject.SetActive(true);
 			buildInfoButton.interactable = true;
 			deviceInfoButton.interactable = false;
