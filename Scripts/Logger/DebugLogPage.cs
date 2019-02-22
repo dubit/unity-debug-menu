@@ -72,7 +72,6 @@ namespace DUCK.DebugMenu.Logger
 			entryPrefab.gameObject.SetActive(false);
 			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(false);
-			clearButton.interactable = false;
 			clearButton.onClick.AddListener(Clear);
 
 			var errorLogData = new LogTypeData(toggleErrorButton, errorIcon);
@@ -144,7 +143,6 @@ namespace DUCK.DebugMenu.Logger
 
 			allLogs.Clear();
 
-			clearButton.interactable = false;
 			scrollRect.gameObject.SetActive(false);
 		}
 
@@ -154,8 +152,6 @@ namespace DUCK.DebugMenu.Logger
 			{
 				scrollRect.gameObject.SetActive(true);
 			}
-
-			clearButton.interactable = true;
 
 			var logTypeData = logTypeDatas[logType];
 			var newLogEntry = Instantiate(entryPrefab, container, false);
