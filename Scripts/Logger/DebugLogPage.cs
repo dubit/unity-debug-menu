@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,12 +68,13 @@ namespace DUCK.DebugMenu.Logger
 		private readonly List<LogEntryElement> allLogs = new List<LogEntryElement>();
 		private Dictionary<LogType, LogTypeData> logTypeDatas;
 
+		public event Action OnLogsCleared;
+
 		private void Awake()
 		{
 			entryPrefab.gameObject.SetActive(false);
 			scrollRect.gameObject.SetActive(false);
 			stackTraceContainer.gameObject.SetActive(false);
-			clearButton.interactable = false;
 			clearButton.onClick.AddListener(Clear);
 
 			var errorLogData = new LogTypeData(toggleErrorButton, errorIcon);
@@ -144,7 +146,6 @@ namespace DUCK.DebugMenu.Logger
 
 			allLogs.Clear();
 
-			clearButton.interactable = false;
 			scrollRect.gameObject.SetActive(false);
 		}
 
@@ -154,8 +155,6 @@ namespace DUCK.DebugMenu.Logger
 			{
 				scrollRect.gameObject.SetActive(true);
 			}
-
-			clearButton.interactable = true;
 
 			var logTypeData = logTypeDatas[logType];
 			var newLogEntry = Instantiate(entryPrefab, container, false);
