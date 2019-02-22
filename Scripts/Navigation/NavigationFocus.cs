@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DUCK.DebugMenu
+namespace DUCK.DebugMenu.Navigation
 {
 	/// <summary>
 	/// Navigation Focus:
@@ -26,10 +27,13 @@ namespace DUCK.DebugMenu
 
 		public void Focus()
 		{
-			if (enabled)
-			{
-				EventSystem.current.SetSelectedGameObject(target);
-			}
+			StartCoroutine(FocusCoroutine());
+		}
+
+		private IEnumerator FocusCoroutine()
+		{
+			yield return new WaitForEndOfFrame();
+			EventSystem.current.SetSelectedGameObject(target);
 		}
 	}
 }

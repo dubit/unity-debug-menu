@@ -2,7 +2,7 @@
 
 namespace DUCK.DebugMenu.InfoPage
 {
-	public class AbstractInfoSubPage : MonoBehaviour
+	public abstract class AbstractInfoSubPage : MonoBehaviour
 	{
 		private const int DEFAULT_CHILDREN = 2;
 
@@ -12,6 +12,8 @@ namespace DUCK.DebugMenu.InfoPage
 		private InfoElement elementTemplate;
 		[SerializeField]
 		private GameObject seperator;
+
+		public abstract void Initialize();
 
 		protected virtual void Awake()
 		{

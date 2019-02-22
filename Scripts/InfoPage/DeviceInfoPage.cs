@@ -4,7 +4,7 @@
 	{
 		public DeviceInfoManifest DeviceInfoManifest { get; private set; }
 
-		public void Initialize()
+		public override void Initialize()
 		{
 			DeviceInfoManifest = new DeviceInfoManifest();
 		}

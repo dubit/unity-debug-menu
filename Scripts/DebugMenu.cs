@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
+using DUCK.DebugMenu.Navigation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,6 +23,9 @@ namespace DUCK.DebugMenu
 	/// </summary>
 	public class DebugMenu : MonoBehaviour
 	{
+		public static string BackCharacter = "←";
+		public static string FolderArrowCharacter = "▶";
+
 		private static DebugMenu instance;
 		public static DebugMenu Instance
 		{
@@ -66,7 +70,8 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private bool useNavigation;
 
-		private readonly Dictionary<string, Button> buttons = new Dictionary<string, Button>();
+		private DebugMenuItemNode rootNode;
+		private DebugMenuItemNode currentPageNode;
 
 		public event Action OnShow;
 		public event Action OnHide;
@@ -77,6 +82,8 @@ namespace DUCK.DebugMenu
 			instance = this;
 
 			rootObject.gameObject.SetActive(false);
+			rootNode = new DebugMenuItemNode();
+			currentPageNode = rootNode;
 
 			// When running tests you cannot use DontDestroyOnLoad in editor mode
 			if (Application.isPlaying)
@@ -104,6 +111,7 @@ namespace DUCK.DebugMenu
 				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
+				navComponents.AddRange(GetComponentsInChildren<NavigableScrollElement>(true));
 				navComponents.ForEach(c => c.enabled = false);
 			}
 		}
@@ -114,6 +122,9 @@ namespace DUCK.DebugMenu
 		public void Show()
 		{
 			rootObject.SetActive(true);
+
+			currentPageNode = rootNode;
+			SetupPage(currentPageNode);
 
 			if (useNavigation)
 			{
@@ -173,79 +184,149 @@ namespace DUCK.DebugMenu
 		/// <summary>
 		/// Adds a new button to the debug menu that will invoke the specified action when clicked
 		/// </summary>
-		/// <param name="text">The text for the button, (this works like an id must be unique to all buttons)</param>
+		/// <param name="path">The path for the button, must be unique</param>
 		/// <param name="action">The action to invoke when clicked</param>
 		/// <param name="hideDebugMenuOnClick">A boolean used to control if the debug menu should hide when the button is clicked (defaults to true)</param>
-		public void AddButton(string text, Action action, bool hideDebugMenuOnClick = true)
+		public void AddButton(string path, Action action, bool hideDebugMenuOnClick = true)
 		{
-			if (string.IsNullOrEmpty(text)) throw new ArgumentNullException("text");
-			if (action == null) throw new ArgumentNullException("action");
+			if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
+			if (action == null) throw new ArgumentNullException(nameof(action));
 
-			if (!buttons.ContainsKey(text))
+			if (ButtonPathExists(path))
 			{
-				var actionButton = Instantiate(actionButtonTemplate);
-				actionButton.transform.SetParent(actionButtonTemplate.transform.parent, false);
-				actionButton.onClick.AddListener(() =>
-				{
-					action.Invoke();
-					if (hideDebugMenuOnClick)
-					{
-						Hide();
-					}
-				});
-				actionButton.GetComponentInChildren<Text>().text = text;
-				actionButton.gameObject.SetActive(true);
-				buttons.Add(text, actionButton);
+				throw new Exception($"Cannot add button at {path}. A button/folder already exists!");
 			}
-		}
 
-		/// <summary>
-		/// Updates a button in the debug menu.
-		/// </summary>
-		/// <param name="oldText">The text of the button to update</param>
-		/// <param name="newText">The new text of the button</param>
-		/// <param name="newAction">An optional replacement of the button onClick</param>
-		/// <param name="hideDebugMenuOnClick">Optional bool if the debug menu should hide when the button is clicked</param>
-		public void UpdateButton(string oldText, string newText, Action newAction = null, bool hideDebugMenuOnClick = true)
-		{
-			if (string.IsNullOrEmpty(oldText)) throw new ArgumentNullException("oldText");
-			if (string.IsNullOrEmpty(newText)) throw new ArgumentNullException("newText");
-
-			Button button;
-			if (!buttons.TryGetValue(oldText, out button)) return;
-
-			buttons.Remove(oldText);
-			button.GetComponentInChildren<Text>().text = newText;
-			buttons.Add(newText, button);
-
-			if (newAction != null)
+			// Add the button!
+			var parts = GetParts(path);
+			var currentNode = rootNode;
+			for (var i = 0; i < parts.Length; i++)
 			{
-				button.onClick.RemoveAllListeners();
-				button.onClick.AddListener(() =>
+				var isLast = i == parts.Length - 1;
+				var part = parts[i];
+				if (currentNode.ContainsChild(part))
 				{
-					newAction.Invoke();
-
-					if (hideDebugMenuOnClick)
-					{
-						Hide();
-					}
-				});
+					currentNode = currentNode.GetChild(part);
+				}
+				else
+				{
+					currentNode =
+						isLast ?
+						currentNode.AddButton(part, action, hideDebugMenuOnClick) :
+						currentNode.AddFolder(part);
+				}
 			}
 		}
 
 		/// <summary>
 		/// Removes a button from the debug menu.
 		/// </summary>
-		/// <param name="text">The text of the button to remove, (this works like an id must be unique to all buttons)</param>
-		public void RemoveButton(string text)
+		/// <param name="path">The path of of the button to remove</param>
+		public void RemoveButton(string path)
 		{
-			if (string.IsNullOrEmpty(text)) throw new ArgumentNullException("text");
+			if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
 
-			if (buttons.ContainsKey(text))
+			if (!ButtonPathExists(path))
 			{
-				Destroy(buttons[text].gameObject);
-				buttons.Remove(text);
+				throw new Exception($"Cannot remove the button {path}. It does not exist.");
+			}
+
+			var parts = GetParts(path);
+			var nodes = new List<DebugMenuItemNode>();
+			var currentNode = rootNode;
+			nodes.Add(currentNode);
+			foreach (var part in parts)
+			{
+				currentNode = currentNode.GetChild(part);
+				nodes.Add(currentNode);
+			}
+
+			for (var i = nodes.Count - 2; i >= 0; i--)
+			{
+				var parent = nodes[i];
+				var child = nodes[i + 1];
+				if (child.ChildCount == 0)
+				{
+					parent.RemoveChild(child.Name);
+				}
+			}
+		}
+
+		private string[] GetParts(string path)
+		{
+			return path.Split(new[] {'/', '\\'}, StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		private bool ButtonPathExists(string path)
+		{
+			var parts = GetParts(path);
+			var currentNode = rootNode;
+			foreach (var part in parts)
+			{
+				if (currentNode.ContainsChild(part))
+				{
+					currentNode = currentNode.GetChild(part);
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		private void SetupPage(DebugMenuItemNode node)
+		{
+			currentPageNode = node;
+			foreach (Transform child in actionButtonTemplate.transform.parent)
+			{
+				if (child != actionButtonTemplate.transform)
+				{
+					Destroy(child.gameObject);
+				}
+			}
+
+			GameObject firstChild = null;
+
+			if (node.Parent != null)
+			{
+				var backButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
+				backButton.GetComponentInChildren<Text>().text = $"{BackCharacter} Back";
+				backButton.onClick.AddListener(() => { SetupPage(node.Parent); });
+				backButton.gameObject.SetActive(true);
+
+				firstChild = backButton.gameObject;
+			}
+
+			foreach (var button in node.Children.Values)
+			{
+				var actionButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
+				if (button.IsFolder)
+				{
+					actionButton.onClick.AddListener(() => { SetupPage(button); });
+				}
+				else
+				{
+					actionButton.onClick.AddListener(() =>
+					{
+						button.Action.Invoke();
+						if (button.HideOnClick) Hide();
+					});
+				}
+
+				var label = actionButton.GetComponentInChildren<Text>();
+				label.text = button.Name + (button.IsFolder ? $" {FolderArrowCharacter}" : "");
+				actionButton.gameObject.SetActive(true);
+
+				firstChild = (firstChild != null) ? firstChild : actionButton.gameObject;
+			}
+
+			if (useNavigation && firstChild != null)
+			{
+				EventSystem.current.SetSelectedGameObject(firstChild);
 			}
 		}
 	}
 }
+

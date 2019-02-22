@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DUCK.DebugMenu
+namespace DUCK.DebugMenu.Navigation
 {
 	public class NavigationLinker : MonoBehaviour
 	{
