@@ -23,6 +23,9 @@ namespace DUCK.DebugMenu
 	/// </summary>
 	public class DebugMenu : MonoBehaviour
 	{
+		public static string BackCharacter = "←";
+		public static string FolderArrowCharacter = "▶";
+
 		private static DebugMenu instance;
 		public static DebugMenu Instance
 		{
@@ -289,7 +292,7 @@ namespace DUCK.DebugMenu
 			if (node.Parent != null)
 			{
 				var backButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
-				backButton.GetComponentInChildren<Text>().text = "← Back";
+				backButton.GetComponentInChildren<Text>().text = $"{BackCharacter} Back";
 				backButton.onClick.AddListener(() => { SetupPage(node.Parent); });
 				backButton.gameObject.SetActive(true);
 
@@ -313,7 +316,7 @@ namespace DUCK.DebugMenu
 				}
 
 				var label = actionButton.GetComponentInChildren<Text>();
-				label.text = button.Name + (button.IsFolder ? " ▶" : "");
+				label.text = button.Name + (button.IsFolder ? $" {FolderArrowCharacter}" : "");
 				actionButton.gameObject.SetActive(true);
 
 				firstChild = (firstChild != null) ? firstChild : actionButton.gameObject;
