@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,8 +66,6 @@ namespace DUCK.DebugMenu.Logger
 		private readonly Color oddBackgroundColor = new Color(0.95f, 0.95f, 0.95f);
 		private readonly List<LogEntryElement> allLogs = new List<LogEntryElement>();
 		private Dictionary<LogType, LogTypeData> logTypeDatas;
-
-		public event Action OnLogsCleared;
 
 		private void Awake()
 		{
