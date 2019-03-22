@@ -11,7 +11,7 @@ namespace DUCK.DebugMenu.Logger
 	/// <summary>
 	/// Manages a list of log entries displayed in the debug menu
 	/// </summary>
-	public class DebugLogPage : MonoBehaviour
+	public class DebugLogPage : AbstractDebugMenuTabPage
 	{
 		private struct PendingLog
 		{
@@ -98,12 +98,9 @@ namespace DUCK.DebugMenu.Logger
 				gameObject.SetActive(false);
 				const string emailSubject = "Unity DebugMenu has reported a log.";
 				var emailBody = GenerateEmailBody(stackTraceLogText.text, stackTraceText.text);
-				DebugMenu.Instance.EmailPage.Show(emailSubject, emailBody, () => gameObject.SetActive(true));
+				DebugMenu.Instance.GetPage<EmailPage>().Show(emailSubject, emailBody, () => gameObject.SetActive(true));
 			});
-		}
 
-		public void Initialize()
-		{
 			Application.logMessageReceived += HandleLog;
 		}
 

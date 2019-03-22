@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace DUCK.DebugMenu.InfoPage
 {
-	public class InformationPage : MonoBehaviour
+	public class InformationPage : AbstractDebugMenuTabPage
 	{
 		[Header("Navigation Buttons")]
 		[SerializeField]
@@ -24,10 +24,7 @@ namespace DUCK.DebugMenu.InfoPage
 			deviceInfoButton.onClick.AddListener(ShowDeviceInfo);
 
 			ShowBuildInfo();
-		}
 
-		public void Initialize()
-		{
 			deviceInfoPage.Initialize();
 			buildInfoPage.Initialize();
 		}

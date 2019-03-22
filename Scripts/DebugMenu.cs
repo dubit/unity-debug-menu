@@ -1,9 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DUCK.DebugMenu.Actions;
-using DUCK.DebugMenu.Email;
-using DUCK.DebugMenu.InfoPage;
-using DUCK.DebugMenu.Logger;
 using DUCK.DebugMenu.Navigation;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,8 +36,6 @@ namespace DUCK.DebugMenu
 			}
 		}
 
-		public EmailPage EmailPage { get { return emailPage; } }
-
 		[SerializeField]
 		private GameObject rootObject;
 
@@ -48,23 +44,14 @@ namespace DUCK.DebugMenu
 		private Button closeButton;
 
 		[SerializeField]
-		private Button infoPageButton;
-
-		[SerializeField]
-		private Button logPageButton;
+		private Button tabPageButtonTemplate;
 
 		[Header("Pages")]
 		[SerializeField]
 		private DebugMenuActionsPage actionsPage;
 
 		[SerializeField]
-		private InformationPage infoPage;
-
-		[SerializeField]
-		private DebugLogPage logPage;
-
-		[SerializeField]
-		private EmailPage emailPage;
+		private AbstractDebugMenuTabPage[] pages;
 
 		[Header("Navigation")]
 		[SerializeField]
@@ -100,8 +87,23 @@ namespace DUCK.DebugMenu
 				AddSummoner(summoner);
 			}
 
-			logPage.Initialize();
-			infoPage.Initialize();
+			foreach (var page in pages)
+			{
+				if (!page.HasButton) continue;
+
+				var tabButton = Instantiate(tabPageButtonTemplate, tabPageButtonTemplate.transform.parent);
+				tabButton.transform.SetSiblingIndex(0);
+				page.TabButton = tabButton;
+				var buttonText = tabButton.GetComponentInChildren<Text>();
+				buttonText.text = page.ButtonText;
+				var thisPage = page;
+				page.BackButton.onClick.AddListener(() => HandleTabClosed(thisPage));
+				tabButton.onClick.AddListener(() => HandleTabButtonClicked(thisPage));
+			}
+
+			tabPageButtonTemplate.gameObject.SetActive(false);
+
+			EnableAllTabs();
 
 			if (!useNavigation)
 			{
@@ -111,6 +113,35 @@ namespace DUCK.DebugMenu
 				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
 				navComponents.AddRange(GetComponentsInChildren<NavigableScrollElement>(true));
 				navComponents.ForEach(c => c.enabled = false);
+			}
+		}
+
+		private void HandleTabButtonClicked(AbstractDebugMenuTabPage page)
+		{
+			foreach (var otherPage in pages)
+			{
+				otherPage.gameObject.SetActive(otherPage == page);
+				if (otherPage.TabButton != null)
+				{
+					otherPage.TabButton.interactable = otherPage != page;
+				}
+			}
+		}
+
+		private void HandleTabClosed(AbstractDebugMenuTabPage page)
+		{
+			page.gameObject.SetActive(false);
+			EnableAllTabs();
+		}
+
+		private void EnableAllTabs()
+		{
+			foreach (var otherPage in pages)
+			{
+				if (otherPage.TabButton != null)
+				{
+					otherPage.TabButton.interactable = true;
+				}
 			}
 		}
 
@@ -143,19 +174,6 @@ namespace DUCK.DebugMenu
 			{
 				OnHide.Invoke();
 			}
-		}
-
-		public void ShowInfo()
-		{
-			infoPage.gameObject.SetActive(true);
-		}
-
-		/// <summary>
-		/// Displays the game log
-		/// </summary>
-		public void ShowGameLog()
-		{
-			logPage.gameObject.SetActive(true);
 		}
 
 		/// <summary>
@@ -194,6 +212,16 @@ namespace DUCK.DebugMenu
 		public void RemoveButton(string path)
 		{
 			actionsPage.RemoveButton(path);
+		}
+
+		/// <summary>
+		/// Gets a specific page from the debug menu by type
+		/// </summary>
+		/// <typeparam name="TPage">The type of page to return</typeparam>
+		/// <returns>The page if it exists or null if it does not</returns>
+		public TPage GetPage<TPage>() where TPage : AbstractDebugMenuTabPage
+		{
+			return pages.FirstOrDefault(p => p is TPage) as TPage;
 		}
 	}
 }
