@@ -116,35 +116,6 @@ namespace DUCK.DebugMenu
 			}
 		}
 
-		private void HandleTabButtonClicked(AbstractDebugMenuTabPage page)
-		{
-			foreach (var otherPage in pages)
-			{
-				otherPage.gameObject.SetActive(otherPage == page);
-				if (otherPage.TabButton != null)
-				{
-					otherPage.TabButton.interactable = otherPage != page;
-				}
-			}
-		}
-
-		private void HandleTabClosed(AbstractDebugMenuTabPage page)
-		{
-			page.gameObject.SetActive(false);
-			EnableAllTabs();
-		}
-
-		private void EnableAllTabs()
-		{
-			foreach (var otherPage in pages)
-			{
-				if (otherPage.TabButton != null)
-				{
-					otherPage.TabButton.interactable = true;
-				}
-			}
-		}
-
 		/// <summary>
 		/// Shows the debug menu
 		/// </summary>
@@ -222,6 +193,35 @@ namespace DUCK.DebugMenu
 		public TPage GetPage<TPage>() where TPage : AbstractDebugMenuTabPage
 		{
 			return pages.FirstOrDefault(p => p is TPage) as TPage;
+		}
+
+		private void HandleTabButtonClicked(AbstractDebugMenuTabPage page)
+		{
+			foreach (var otherPage in pages)
+			{
+				otherPage.gameObject.SetActive(otherPage == page);
+				if (otherPage.TabButton != null)
+				{
+					otherPage.TabButton.interactable = otherPage != page;
+				}
+			}
+		}
+
+		private void HandleTabClosed(AbstractDebugMenuTabPage page)
+		{
+			page.gameObject.SetActive(false);
+			EnableAllTabs();
+		}
+
+		private void EnableAllTabs()
+		{
+			foreach (var otherPage in pages)
+			{
+				if (otherPage.TabButton != null)
+				{
+					otherPage.TabButton.interactable = true;
+				}
+			}
 		}
 	}
 }
