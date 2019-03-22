@@ -23,7 +23,7 @@ namespace DUCK.DebugMenu.Actions
 		private DebugMenuItemNode rootNode;
 		private DebugMenuItemNode currentPageNode;
 
-		private void Awake()
+		public void Init()
 		{
 			rootNode = new DebugMenuItemNode();
 			currentPageNode = rootNode;

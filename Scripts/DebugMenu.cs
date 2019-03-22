@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using DUCK.DebugMenu.Actions;
 using DUCK.DebugMenu.Email;
@@ -83,6 +83,8 @@ namespace DUCK.DebugMenu
 			instance = this;
 
 			rootObject.gameObject.SetActive(false);
+
+			actionsPage.Init();
 
 			// When running tests you cannot use DontDestroyOnLoad in editor mode
 			if (Application.isPlaying)
