@@ -53,9 +53,6 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private Button logPageButton;
 
-		[SerializeField]
-		private Button actionButtonTemplate;
-
 		[Header("Pages")]
 		[SerializeField]
 		private DebugMenuActionsPage actionsPage;
