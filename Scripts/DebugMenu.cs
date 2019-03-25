@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using DUCK.DebugMenu.Actions;
 using DUCK.DebugMenu.Email;
 using DUCK.DebugMenu.InfoPage;
 using DUCK.DebugMenu.Logger;
@@ -23,9 +24,6 @@ namespace DUCK.DebugMenu
 	/// </summary>
 	public class DebugMenu : MonoBehaviour
 	{
-		public static string BackCharacter = "←";
-		public static string FolderArrowCharacter = "▶";
-
 		private static DebugMenu instance;
 		public static DebugMenu Instance
 		{
@@ -55,23 +53,23 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private Button logPageButton;
 
-		[SerializeField]
-		private Button actionButtonTemplate;
-
 		[Header("Pages")]
 		[SerializeField]
+		private DebugMenuActionsPage actionsPage;
+
+		[SerializeField]
 		private InformationPage infoPage;
+
 		[SerializeField]
 		private DebugLogPage logPage;
+
 		[SerializeField]
 		private EmailPage emailPage;
 
 		[Header("Navigation")]
 		[SerializeField]
 		private bool useNavigation;
-
-		private DebugMenuItemNode rootNode;
-		private DebugMenuItemNode currentPageNode;
+		public bool UseNavigation => useNavigation;
 
 		public event Action OnShow;
 		public event Action OnHide;
@@ -82,8 +80,8 @@ namespace DUCK.DebugMenu
 			instance = this;
 
 			rootObject.gameObject.SetActive(false);
-			rootNode = new DebugMenuItemNode();
-			currentPageNode = rootNode;
+
+			actionsPage.Init();
 
 			// When running tests you cannot use DontDestroyOnLoad in editor mode
 			if (Application.isPlaying)
@@ -122,9 +120,6 @@ namespace DUCK.DebugMenu
 		public void Show()
 		{
 			rootObject.SetActive(true);
-
-			currentPageNode = rootNode;
-			SetupPage(currentPageNode);
 
 			if (useNavigation)
 			{
@@ -189,33 +184,7 @@ namespace DUCK.DebugMenu
 		/// <param name="hideDebugMenuOnClick">A boolean used to control if the debug menu should hide when the button is clicked (defaults to true)</param>
 		public void AddButton(string path, Action action, bool hideDebugMenuOnClick = true)
 		{
-			if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
-			if (action == null) throw new ArgumentNullException(nameof(action));
-
-			if (ButtonPathExists(path))
-			{
-				throw new Exception($"Cannot add button at {path}. A button/folder already exists!");
-			}
-
-			// Add the button!
-			var parts = GetParts(path);
-			var currentNode = rootNode;
-			for (var i = 0; i < parts.Length; i++)
-			{
-				var isLast = i == parts.Length - 1;
-				var part = parts[i];
-				if (currentNode.ContainsChild(part))
-				{
-					currentNode = currentNode.GetChild(part);
-				}
-				else
-				{
-					currentNode =
-						isLast ?
-						currentNode.AddButton(part, action, hideDebugMenuOnClick) :
-						currentNode.AddFolder(part);
-				}
-			}
+			actionsPage.AddButton(path, action,hideDebugMenuOnClick);
 		}
 
 		/// <summary>
@@ -224,108 +193,7 @@ namespace DUCK.DebugMenu
 		/// <param name="path">The path of of the button to remove</param>
 		public void RemoveButton(string path)
 		{
-			if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
-
-			if (!ButtonPathExists(path))
-			{
-				throw new Exception($"Cannot remove the button {path}. It does not exist.");
-			}
-
-			var parts = GetParts(path);
-			var nodes = new List<DebugMenuItemNode>();
-			var currentNode = rootNode;
-			nodes.Add(currentNode);
-			foreach (var part in parts)
-			{
-				currentNode = currentNode.GetChild(part);
-				nodes.Add(currentNode);
-			}
-
-			for (var i = nodes.Count - 2; i >= 0; i--)
-			{
-				var parent = nodes[i];
-				var child = nodes[i + 1];
-				if (child.ChildCount == 0)
-				{
-					parent.RemoveChild(child.Name);
-				}
-			}
-		}
-
-		private string[] GetParts(string path)
-		{
-			return path.Split(new[] {'/', '\\'}, StringSplitOptions.RemoveEmptyEntries);
-		}
-
-		private bool ButtonPathExists(string path)
-		{
-			var parts = GetParts(path);
-			var currentNode = rootNode;
-			foreach (var part in parts)
-			{
-				if (currentNode.ContainsChild(part))
-				{
-					currentNode = currentNode.GetChild(part);
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private void SetupPage(DebugMenuItemNode node)
-		{
-			currentPageNode = node;
-			foreach (Transform child in actionButtonTemplate.transform.parent)
-			{
-				if (child != actionButtonTemplate.transform)
-				{
-					Destroy(child.gameObject);
-				}
-			}
-
-			GameObject firstChild = null;
-
-			if (node.Parent != null)
-			{
-				var backButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
-				backButton.GetComponentInChildren<Text>().text = $"{BackCharacter} Back";
-				backButton.onClick.AddListener(() => { SetupPage(node.Parent); });
-				backButton.gameObject.SetActive(true);
-
-				firstChild = backButton.gameObject;
-			}
-
-			foreach (var button in node.Children.Values)
-			{
-				var actionButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
-				if (button.IsFolder)
-				{
-					actionButton.onClick.AddListener(() => { SetupPage(button); });
-				}
-				else
-				{
-					actionButton.onClick.AddListener(() =>
-					{
-						button.Action.Invoke();
-						if (button.HideOnClick) Hide();
-					});
-				}
-
-				var label = actionButton.GetComponentInChildren<Text>();
-				label.text = button.Name + (button.IsFolder ? $" {FolderArrowCharacter}" : "");
-				actionButton.gameObject.SetActive(true);
-
-				firstChild = (firstChild != null) ? firstChild : actionButton.gameObject;
-			}
-
-			if (useNavigation && firstChild != null)
-			{
-				EventSystem.current.SetSelectedGameObject(firstChild);
-			}
+			actionsPage.RemoveButton(path);
 		}
 	}
 }
