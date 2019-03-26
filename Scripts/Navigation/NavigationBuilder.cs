@@ -11,6 +11,15 @@ namespace DUCK.DebugMenu.Navigation
 	/// </summary>
 	public class NavigationBuilder : MonoBehaviour
 	{
+		private enum NavigationDirection
+		{
+			Vertical,
+			Horizontal,
+		}
+
+		[SerializeField]
+		private NavigationDirection direction;
+
 		[SerializeField]
 		private Selectable[] topElements;
 
