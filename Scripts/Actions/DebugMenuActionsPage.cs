@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace DUCK.DebugMenu.Actions
 {
@@ -15,10 +15,10 @@ namespace DUCK.DebugMenu.Actions
 		private string folderArrowCharacter = "▶";
 
 		[SerializeField]
-		private Button actionButtonTemplate;
+		private DebugMenu debugMenu;
 
 		[SerializeField]
-		private DebugMenu debugMenu;
+		private ButtonList buttonList;
 
 		private DebugMenuItemNode rootNode;
 		private DebugMenuItemNode currentPageNode;
@@ -109,47 +109,38 @@ namespace DUCK.DebugMenu.Actions
 		private void SetupPage(DebugMenuItemNode node)
 		{
 			currentPageNode = node;
-			foreach (Transform child in actionButtonTemplate.transform.parent)
-			{
-				if (child != actionButtonTemplate.transform)
-				{
-					Destroy(child.gameObject);
-				}
-			}
+
+			buttonList.Clear();
 
 			GameObject firstChild = null;
 
 			if (node.Parent != null)
 			{
-				var backButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
-				backButton.GetComponentInChildren<Text>().text = $"{backCharacter} Back";
-				backButton.onClick.AddListener(() => { SetupPage(node.Parent); });
-				backButton.gameObject.SetActive(true);
-
-				firstChild = backButton.gameObject;
+				var button = buttonList.AddButton($"{backCharacter} Back", () => { SetupPage(node.Parent); });
+				firstChild = button.gameObject;
 			}
 
-			foreach (var button in node.Children.Values)
+			foreach (var childNode in node.Children.Values)
 			{
-				var actionButton = Instantiate(actionButtonTemplate, actionButtonTemplate.transform.parent, false);
-				if (button.IsFolder)
+				var isFolder = childNode.IsFolder;
+				var buttonText = childNode.Name + (isFolder ? $" {folderArrowCharacter}" : "");
+
+				UnityAction actionFunc = () =>
 				{
-					actionButton.onClick.AddListener(() => { SetupPage(button); });
-				}
-				else
-				{
-					actionButton.onClick.AddListener(() =>
+					if (isFolder)
 					{
-						button.Action.Invoke();
-						if (button.HideOnClick) debugMenu.Hide();
-					});
-				}
+						SetupPage(childNode);
+					}
+					else
+					{
+						childNode.Action.Invoke();
+						if (childNode.HideOnClick) debugMenu.Hide();
+					}
+				};
 
-				var label = actionButton.GetComponentInChildren<Text>();
-				label.text = button.Name + (button.IsFolder ? $" {folderArrowCharacter}" : "");
-				actionButton.gameObject.SetActive(true);
+				var button = buttonList.AddButton(buttonText, actionFunc);
 
-				firstChild = (firstChild != null) ? firstChild : actionButton.gameObject;
+				firstChild = (firstChild != null) ? firstChild : button.gameObject;
 			}
 
 			if (debugMenu.UseNavigation && firstChild != null)

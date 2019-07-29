@@ -2858,6 +2858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Logs
+  backButton: {fileID: 114643001718472902}
   infoIcon: {fileID: 21300000, guid: 5adcb1d7b37423e4eab2f7921f35b23f, type: 3}
   warningIcon: {fileID: 21300000, guid: 44ce22185c26a4df99f7d8bc4941f63b, type: 3}
   errorIcon: {fileID: 21300000, guid: a1faa93da509d4390a7f73c333ab11d7, type: 3}
@@ -3865,10 +3866,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: 
+  backButton: {fileID: 114443953117240286}
   emailAddressesJson: {fileID: 4900000, guid: 1644d1fb5287f4ce6b53ec27ea950d2d, type: 3}
   cloudBuildInfoPage: {fileID: 114323717363691648}
   deviceInfoPage: {fileID: 114600372538343970}
-  backButton: {fileID: 114443953117240286}
   sendEmailButton: {fileID: 114423805724162580}
   emailDropdown: {fileID: 114290691600694966}
   subjectText: {fileID: 114101809962024672}
@@ -7666,7 +7667,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752940709015496}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7689,7 +7690,6 @@ MonoBehaviour:
   rootObject: {fileID: 1404480785102004}
   closeButton: {fileID: 114980657277255878}
   tabPageButtonTemplate: {fileID: 4697029086615930481}
-  actionButtonTemplate: {fileID: 114615334361687818}
   actionsPage: {fileID: 1273963858153308277}
   pages:
   - {fileID: 114745247209445034}
@@ -8202,6 +8202,7 @@ GameObject:
   - component: {fileID: 114805780447014788}
   - component: {fileID: 222098887811414380}
   - component: {fileID: 1273963858153308277}
+  - component: {fileID: 7211149034522790922}
   m_Layer: 5
   m_Name: ActionsPage
   m_TagString: Untagged
@@ -8284,8 +8285,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backCharacter: "\u2190"
   folderArrowCharacter: "\u25B6"
-  actionButtonTemplate: {fileID: 114615334361687818}
   debugMenu: {fileID: 114420445526007646}
+  buttonList: {fileID: 7211149034522790922}
+--- !u!114 &7211149034522790922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791091112866756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e934fc8ca10a4b39b316cc35739e9caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionButtonTemplate: {fileID: 114615334361687818}
 --- !u!1 &1797113121139062
 GameObject:
   m_ObjectHideFlags: 0
@@ -8864,6 +8878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Info
+  backButton: {fileID: 114658212631577694}
   buildInfoButton: {fileID: 114283699690399314}
   deviceInfoButton: {fileID: 114277631700706876}
   buildInfoPage: {fileID: 114323717363691648}
