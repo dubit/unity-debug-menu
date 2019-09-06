@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6452d75e1074158ba0fd24c1b71ebc6, type: 3}
+  m_Name: InspectorPrefabs
+  m_EditorClassIdentifier: 
+  simpleDataMember: {fileID: 5528973115456072980, guid: 4c1ffcb43fae7ed48b8a5f45c6411366,
+    type: 3}
+  dividerPrefab: {fileID: 2182703840116326181, guid: d33085cc3ba8d87408ef42f7e60657ab,
+    type: 3}
+  labelPrefab: {fileID: 4657738209213160722, guid: 33a0a806319a1ec47af048d2bdae6efe,
+    type: 3}
