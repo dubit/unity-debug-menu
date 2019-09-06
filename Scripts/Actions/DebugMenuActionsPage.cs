@@ -112,12 +112,10 @@ namespace DUCK.DebugMenu.Actions
 
 			buttonList.Clear();
 
-			GameObject firstChild = null;
 
 			if (node.Parent != null)
 			{
-				var button = buttonList.AddButton($"{backCharacter} Back", () => { SetupPage(node.Parent); });
-				firstChild = button.gameObject;
+				buttonList.AddButton($"{backCharacter} Back", () => { SetupPage(node.Parent); });
 			}
 
 			foreach (var childNode in node.Children.Values)
@@ -138,14 +136,7 @@ namespace DUCK.DebugMenu.Actions
 					}
 				};
 
-				var button = buttonList.AddButton(buttonText, actionFunc);
-
-				firstChild = (firstChild != null) ? firstChild : button.gameObject;
-			}
-
-			if (debugMenu.UseNavigation && firstChild != null)
-			{
-				EventSystem.current.SetSelectedGameObject(firstChild);
+				buttonList.AddButton(buttonText, actionFunc);
 			}
 		}
 

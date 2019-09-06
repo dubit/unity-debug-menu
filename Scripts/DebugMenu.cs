@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using DUCK.DebugMenu.Actions;
-using DUCK.DebugMenu.Navigation;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DUCK.DebugMenu
@@ -53,11 +50,6 @@ namespace DUCK.DebugMenu
 		[SerializeField]
 		private AbstractDebugMenuTabPage[] pages;
 
-		[Header("Navigation")]
-		[SerializeField]
-		private bool useNavigation;
-		public bool UseNavigation => useNavigation;
-
 		public event Action OnShow;
 		public event Action OnHide;
 
@@ -104,16 +96,6 @@ namespace DUCK.DebugMenu
 			tabPageButtonTemplate.gameObject.SetActive(false);
 
 			EnableAllTabs();
-
-			if (!useNavigation)
-			{
-				var navComponents = new List<MonoBehaviour>();
-				navComponents.AddRange(GetComponentsInChildren<NavigationBuilder>(true));
-				navComponents.AddRange(GetComponentsInChildren<NavigationFocus>(true));
-				navComponents.AddRange(GetComponentsInChildren<NavigationLinker>(true));
-				navComponents.AddRange(GetComponentsInChildren<NavigableScrollElement>(true));
-				navComponents.ForEach(c => c.enabled = false);
-			}
 		}
 
 		/// <summary>
@@ -122,11 +104,6 @@ namespace DUCK.DebugMenu
 		public void Show()
 		{
 			rootObject.SetActive(true);
-
-			if (useNavigation)
-			{
-				EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
-			}
 
 			if (OnShow != null)
 			{
