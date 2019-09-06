@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,8 @@ namespace DUCK.DebugMenu.InspectorPage
 
 		public void Add(object obj, string name = null)
 		{
+			if (obj == null) throw new ArgumentNullException(nameof(obj));
+
 			var item = new InspectorShelfItem
 			{
 				Object = obj,
