@@ -35,7 +35,7 @@ namespace DUCK.DebugMenu.InspectorPage
 			sceneView.OnInspectionRequested += HandleSceneViewInspectionRequested;
 
 			sceneViewButton.onClick.AddListener(ShowSceneView);
-			shelfViewButton.onClick.AddListener(ShowPoolView);
+			shelfViewButton.onClick.AddListener(ShowShelfView);
 		}
 
 		private void ShowSceneView()
@@ -50,7 +50,7 @@ namespace DUCK.DebugMenu.InspectorPage
 			}
 		}
 
-		private void ShowPoolView()
+		private void ShowShelfView()
 		{
 			shelfView.gameObject.SetActive(true);
 
