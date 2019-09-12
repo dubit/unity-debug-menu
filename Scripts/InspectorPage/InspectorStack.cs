@@ -7,12 +7,37 @@ namespace DUCK.DebugMenu.InspectorPage
 {
 	public class InspectorStack : MonoBehaviour
 	{
+		[Serializable]
+		class Templates
+		{
+			[SerializeField]
+			public SceneHierarchyViewStackElement sceneHierarchyView;
+
+			[SerializeField]
+			public InspectorView inspectorView;
+
+			[SerializeField]
+			public ShelfView shelfView;
+		}
+
+		public bool IsEmpty => stack.Count == 0;
+
 		[SerializeField]
-		private Inspector inspectorTemplate;
+		private Templates templates;
 
-		private readonly List<Inspector> stack = new List<Inspector>();
+		[SerializeField]
+		private Transform parent;
 
-		public void InspectObject(object targetObject, InspectorConfig config = null)
+		private readonly List<GameObject> stack = new List<GameObject>();
+
+		public event Action OnStackChanged;
+
+		public void AddInspectorView(object targetObject)
+		{
+			AddInspectorView(targetObject, null);
+		}
+
+		public void AddInspectorView(object targetObject, InspectorConfig config)
 		{
 			if (targetObject == null) throw new ArgumentNullException(nameof(targetObject));
 			if (targetObject.GetType().IsPrimitive)
@@ -20,12 +45,49 @@ namespace DUCK.DebugMenu.InspectorPage
 				throw new ArgumentException("Target object cannot be a primitive type", nameof(targetObject));
 			}
 
-			var inspector = Instantiate(inspectorTemplate, inspectorTemplate.transform.parent);
-			stack.Add(inspector);
-			inspector.gameObject.SetActive(true);
-			inspector.InspectObject(targetObject, config);
-			inspector.BackButton.onClick.AddListener(Back);
-			inspector.HomeButton.onClick.AddListener(ClearStack);
+			var stackElement = Instantiate(templates.inspectorView, parent);
+			stackElement.gameObject.SetActive(true);
+
+			stackElement.InspectObject(targetObject, config);
+			stack.Add(stackElement.gameObject);
+			OnStackChanged?.Invoke();
+		}
+
+		public void AddShelfView(InspectorShelf shelf)
+		{
+			var stackElement = Instantiate(templates.shelfView, parent);
+			stackElement.gameObject.SetActive(true);
+
+			stackElement.Init(shelf.Items, AddInspectorView);
+
+			stack.Add(stackElement.gameObject);
+			OnStackChanged?.Invoke();
+		}
+
+		public void AddSceneHierarchyView(IEnumerable<GameObject> objects)
+		{
+			var stackElement = Instantiate(templates.sceneHierarchyView, parent);
+			stackElement.gameObject.SetActive(true);
+
+			stackElement.Init(
+				objects,
+				target =>
+				{
+					var children = new List<GameObject>();
+					foreach (Transform child in target.transform)
+					{
+						children.Add(child.gameObject);
+					}
+
+					if (children.Count > 0)
+					{
+						AddSceneHierarchyView(children.ToArray());
+					}
+				},
+				AddInspectorView);
+
+			stack.Add(stackElement.gameObject);
+			OnStackChanged?.Invoke();
 		}
 
 		public void Back()
@@ -34,18 +96,20 @@ namespace DUCK.DebugMenu.InspectorPage
 			{
 				var obj = stack[stack.Count - 1];
 				stack.Remove(obj);
-				Destroy(obj.gameObject);
+				Destroy(obj);
+				OnStackChanged?.Invoke();
 			}
 		}
 
 		public void ClearStack()
 		{
-			foreach (var buttonList in stack)
+			for (var i = stack.Count - 1; i >= 0; i--)
 			{
-				Destroy(buttonList.gameObject);
+				var element = stack[i];
+				Destroy(element);
+				stack.Remove(element);
 			}
-
-			stack.Clear();
+			OnStackChanged?.Invoke();
 		}
 	}
 }

@@ -1,20 +1,11 @@
 ﻿using System;
 using DUCK.DebugMenu.InspectorPage.Config;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DUCK.DebugMenu.InspectorPage
 {
-	public class Inspector : MonoBehaviour
+	public class InspectorView : MonoBehaviour
 	{
-		[SerializeField]
-		private Button homeButton;
-		public Button HomeButton => homeButton;
-
-		[SerializeField]
-		private Button backButton;
-		public Button BackButton => backButton;
-
 		[SerializeField]
 		private Transform parent;
 

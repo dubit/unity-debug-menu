@@ -1,4 +1,4 @@
-using DUCK.DebugMenu;
+using System.Collections.Generic;
 using DUCK.DebugMenu.InspectorPage.Config;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,16 +11,16 @@ namespace DUCK.DebugMenu.InspectorPage
 		public InspectorShelf Shelf { get; } = new InspectorShelf();
 
 		[SerializeField]
-		private SceneHierarchyView sceneView;
-
-		[SerializeField]
-		private ShelfView shelfView;
-
-		[SerializeField]
-		private InspectorStack inspectorStack;
-
-		[SerializeField]
 		private InspectorPrefabs builtInPrefabs;
+
+		[SerializeField]
+		private InspectorStack stack;
+
+		[SerializeField]
+		private Button homeButton;
+
+		[SerializeField]
+		private Button backStackButton;
 
 		[SerializeField]
 		private Button sceneViewButton;
@@ -31,44 +31,44 @@ namespace DUCK.DebugMenu.InspectorPage
 		private void Awake()
 		{
 			InspectorConfig.Init(builtInPrefabs);
+		}
 
-			sceneView.OnInspectionRequested += HandleSceneViewInspectionRequested;
-
+		private void Start()
+		{
 			sceneViewButton.onClick.AddListener(ShowSceneView);
 			shelfViewButton.onClick.AddListener(ShowShelfView);
+			homeButton.onClick.AddListener(stack.ClearStack);
+			backStackButton.onClick.AddListener(stack.Back);
+			UpdateButtonStates();
+
+			stack.OnStackChanged += UpdateButtonStates;
+		}
+
+		private void UpdateButtonStates()
+		{
+			backStackButton.interactable = !stack.IsEmpty;
+			homeButton.interactable = !stack.IsEmpty;
 		}
 
 		private void ShowSceneView()
 		{
-			sceneView.gameObject.SetActive(true);
-
+			var rootGameObjects = new List<GameObject>();
 			for (int i = 0; i < SceneManager.sceneCount; i++)
 			{
 				var scene = SceneManager.GetSceneAt(i);
-				var rootGameObjects = scene.GetRootGameObjects();
-				sceneView.ShowObjects(rootGameObjects);
+				rootGameObjects.AddRange(scene.GetRootGameObjects());
 			}
+			stack.AddSceneHierarchyView(rootGameObjects);
 		}
 
 		private void ShowShelfView()
 		{
-			shelfView.gameObject.SetActive(true);
-
-			shelfView.Init(
-				Shelf.Items,
-				obj => inspectorStack.InspectObject(obj),
-				() => shelfView.gameObject.SetActive(false));
+			stack.AddShelfView(Shelf);
 		}
 
 		private void OnEnable()
 		{
-			sceneView.ClearStack();
-			inspectorStack.ClearStack();
-		}
-
-		private void HandleSceneViewInspectionRequested(object obj)
-		{
-			inspectorStack.InspectObject(obj);
+			stack.ClearStack();
 		}
 	}
 }

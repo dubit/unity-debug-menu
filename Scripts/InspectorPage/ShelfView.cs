@@ -9,17 +9,12 @@ namespace DUCK.DebugMenu.InspectorPage
 	public class ShelfView : MonoBehaviour
 	{
 		[SerializeField]
-		private Button homeButton;
-
-		[SerializeField]
 		private ButtonList buttonList;
 
 		public void Init(
 			IEnumerable<InspectorShelf.InspectorShelfItem> objects,
-			Action<object> onInspectionRequested,
-			UnityAction home)
+			Action<object> onInspectionRequested)
 		{
-			homeButton.onClick.AddListener(home);
 
 			buttonList.Clear();
 

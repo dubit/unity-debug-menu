@@ -11,23 +11,12 @@ namespace DUCK.DebugMenu.InspectorPage
 	public class SceneHierarchyViewStackElement : MonoBehaviour
 	{
 		[SerializeField]
-		private Button homeButton;
-
-		[SerializeField]
-		private Button backButton;
-
-		[SerializeField]
 		private ButtonList buttonList;
 
 		public void Init(IEnumerable<GameObject> objects,
 			Action<GameObject> onSelected,
-			Action<GameObject> onInspectionRequested,
-			UnityAction back,
-			UnityAction home)
+			Action<GameObject> onInspectionRequested)
 		{
-			homeButton.onClick.AddListener(home);
-			backButton.onClick.AddListener(back);
-
 			foreach (var element in objects)
 			{
 				var obj = element;
@@ -41,6 +30,5 @@ namespace DUCK.DebugMenu.InspectorPage
 				}
 			}
 		}
-
 	}
 }
