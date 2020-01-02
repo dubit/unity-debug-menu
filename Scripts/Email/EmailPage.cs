@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace DUCK.DebugMenu.Email
 {
-	public class EmailPage : MonoBehaviour
+	public class EmailPage : AbstractDebugMenuTabPage
 	{
 		public const string SEPERATOR = "----------------------------------";
 
@@ -20,8 +20,6 @@ namespace DUCK.DebugMenu.Email
 		private CloudBuildInfoPage cloudBuildInfoPage;
 		[SerializeField]
 		private DeviceInfoPage deviceInfoPage;
-		[SerializeField]
-		private Button backButton;
 		[SerializeField]
 		private Button sendEmailButton;
 		[SerializeField]
@@ -40,9 +38,8 @@ namespace DUCK.DebugMenu.Email
 
 			emailDropdown.AddOptions(emailAddresses.ToList());
 
-			backButton.onClick.AddListener(() =>
+			BackButton.onClick.AddListener(() =>
 			{
-				gameObject.SetActive(false);
 				onBack();
 			});
 
