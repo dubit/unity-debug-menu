@@ -9,14 +9,49 @@ namespace DUCK.DebugMenu
 	/// </summary>
 	public class DefaultDebugMenuSummoner : MonoBehaviour, IDebugMenuSummoner
 	{
-		private const int TOUCH_AMOUNT = 6;
+		private const float TOUCH_TIME_OUT = 2;
+		private const int TOUCH_AMOUNT = 5;
 		private const KeyCode ACTIVATE_KEY = KeyCode.F7;
+		private float touchTime;
+		private int index;
 
 		public event Action OnSummonRequested;
 
+		private bool IsHeld()
+		{
+			var touchCount = Input.touches;
+
+			touchCount.ForEach(touch =>
+			{
+				if (touch.phase == TouchPhase.Began)
+				{
+					index++;
+				}
+				else if (touch.phase == TouchPhase.Ended)
+				{
+					index = 0;
+				}
+			});
+			
+			if(index == TOUCH_AMOUNT)
+			{
+				touchTime += Time.deltaTime;
+
+				if (touchTime >= TOUCH_TIME_OUT)
+				{
+					index = 0;
+					touchTime = 0;
+					
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		private void Update()
 		{
-			if (Input.touchCount == TOUCH_AMOUNT || Input.GetKeyDown(ACTIVATE_KEY))
+			if (IsHeld() || Input.GetKeyDown(ACTIVATE_KEY))
 			{
 				if (OnSummonRequested != null)
 				{
