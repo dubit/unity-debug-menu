@@ -5,7 +5,7 @@ namespace DUCK.DebugMenu
 {
 	/// <summary>
 	/// A simple implementation of IDebugMenuSummoner, that summons the debug menu when F7 is pressed, or on a device,
-	/// when 6 fingers are pressed down
+	/// when 5 fingers are held down
 	/// </summary>
 	public class DefaultDebugMenuSummoner : MonoBehaviour, IDebugMenuSummoner
 	{
