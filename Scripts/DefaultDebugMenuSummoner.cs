@@ -19,9 +19,9 @@ namespace DUCK.DebugMenu
 
 		private bool IsHeld()
 		{
-			var touchCount = Input.touches;
+			var touches = Input.touches;
 
-			touchCount.ForEach(touch =>
+			foreach (var touch in touches)
 			{
 				if (touch.phase == TouchPhase.Began)
 				{
@@ -31,7 +31,7 @@ namespace DUCK.DebugMenu
 				{
 					index = 0;
 				}
-			});
+			}
 			
 			if(index == TOUCH_AMOUNT)
 			{
