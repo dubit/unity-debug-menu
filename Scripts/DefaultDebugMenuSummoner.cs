@@ -17,33 +17,33 @@ namespace DUCK.DebugMenu
 
 		public event Action OnSummonRequested;
 
-		private bool IsHeld()
+		private int GetTouchCount()
 		{
-			var touches = Input.touches;
+			var result = 0;
+			var touchCount = Input.touchCount;
 
-			foreach (var touch in touches)
+			for (var i = 0; i < touchCount; i++)
 			{
-				if (touch.phase == TouchPhase.Began)
+				var touch = Input.GetTouch(i);
+				if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
 				{
-					index++;
-				}
-				else if (touch.phase == TouchPhase.Ended)
-				{
-					index = 0;
+					result++;
 				}
 			}
-			
-			if(index == TOUCH_AMOUNT)
-			{
-				touchTime += Time.deltaTime;
 
-				if (touchTime >= TOUCH_TIME_OUT)
-				{
-					index = 0;
-					touchTime = 0;
-					
-					return true;
-				}
+			return result;
+		}
+		
+		private bool IsHeld()
+		{
+			touchTime = GetTouchCount() >= TOUCH_AMOUNT
+				? touchTime + Time.deltaTime
+				: 0;
+
+			if (touchTime >= TOUCH_TIME_OUT)
+			{
+				touchTime = 0;
+				return true;
 			}
 
 			return false;
