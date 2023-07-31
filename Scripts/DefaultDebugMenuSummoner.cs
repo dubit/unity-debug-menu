@@ -12,9 +12,8 @@ namespace DUCK.DebugMenu
 		private const float TOUCH_TIME_OUT = 2;
 		private const int TOUCH_AMOUNT = 5;
 		private const KeyCode ACTIVATE_KEY = KeyCode.F7;
-		private float touchTime;
-		private int index;
-
+		private float heldTime;
+		
 		public event Action OnSummonRequested;
 
 		private int GetTouchCount()
@@ -36,13 +35,14 @@ namespace DUCK.DebugMenu
 		
 		private bool IsHeld()
 		{
-			touchTime = GetTouchCount() >= TOUCH_AMOUNT
-				? touchTime + Time.deltaTime
+			heldTime = GetTouchCount() >= TOUCH_AMOUNT
+				? heldTime + Time.deltaTime
 				: 0;
 
-			if (touchTime >= TOUCH_TIME_OUT)
+			if (heldTime >= TOUCH_TIME_OUT)
 			{
-				touchTime = 0;
+				heldTime = 0;
+
 				return true;
 			}
 
