@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace DUCK.DebugMenu
@@ -9,11 +9,11 @@ namespace DUCK.DebugMenu
 	/// </summary>
 	public class DefaultDebugMenuSummoner : MonoBehaviour, IDebugMenuSummoner
 	{
-		private const float TOUCH_TIME_OUT = 2;
+		private const float TOUCH_TIME_OUT = 2f;
 		private const int TOUCH_AMOUNT = 5;
 		private const KeyCode ACTIVATE_KEY = KeyCode.F7;
 		private float heldTime;
-		
+
 		public event Action OnSummonRequested;
 
 		private int GetTouchCount()
@@ -32,17 +32,16 @@ namespace DUCK.DebugMenu
 
 			return result;
 		}
-		
+
 		private bool IsHeld()
 		{
 			heldTime = GetTouchCount() >= TOUCH_AMOUNT
 				? heldTime + Time.deltaTime
-				: 0;
+				: 0f;
 
 			if (heldTime >= TOUCH_TIME_OUT)
 			{
-				heldTime = 0;
-
+				heldTime = 0f;
 				return true;
 			}
 
