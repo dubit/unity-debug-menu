@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace DUCK.DebugMenu
@@ -52,10 +52,7 @@ namespace DUCK.DebugMenu
 		{
 			if (IsHeld() || Input.GetKeyDown(ACTIVATE_KEY))
 			{
-				if (OnSummonRequested != null)
-				{
-					OnSummonRequested.Invoke();
-				}
+				OnSummonRequested?.Invoke();
 			}
 		}
 	}
